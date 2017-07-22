@@ -5,8 +5,25 @@ $(document).ready(function(){
 
   changeLanguage();
 
+  loginAjax();
+
   document.addEventListener("deviceready", onDeviceReady, false);
 });
+
+function loginAjax(){
+
+  $.ajax({
+  type: "POST", 
+  crossDomain: true, 
+  url: serverSite+"api/login", 
+  dataType: 'json', 
+  cache: false, 
+  headers:{ "username" : "student", "password": "qwe123" } });
+}
+
+function koko(){
+  
+}
 
 // load html template content
 function loadPage(wantedPage){
