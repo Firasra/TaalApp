@@ -1,5 +1,6 @@
 $(document).ready(function(){
-  
+
+ // startScanning();
   isLoggedin();
   changeLanguage();
 
@@ -32,7 +33,8 @@ function loginAction(form){
           localStorage.auth_token = response.data.token;
           localStorage.username = response.data.username;
           loadPage('home.html');
-        }
+          $('#scan').click();
+        } 
       }
     }); 
   } 
@@ -67,7 +69,7 @@ function isLoggedin(){
     $.ajax({
       type: "POST", 
       crossDomain: true, 
-      url: serverSite+"api/isLogged", 
+      url: serverSite+"api/isLoggedin", 
       dataType: 'json', 
       cache: false, 
       headers:{ "username" : username, "token": token } 
@@ -87,54 +89,12 @@ function logout(){
   loadPage('login.html');   
 }
 
-
-
 // load html template content
 function loadPage(wantedPage){
   $("#page_content").load(wantedPage, function(){
     changeLanguage();
     startScanning();
   });
-}
-
-function checkLogin(){
-
-
-  // if its the first time user enter the app
-  if(typeof localStorage.auth_token === 'undefined'){
-    localStorage.auth_token = false;
-  }
-
-  // check if user has not logged in yet, redirect to login page
-  if(localStorage.auth_token === false || localStorage.auth_token === 'false'){
-    var path = window.location.pathname;
-    var page = path.split("/").pop();
-    if(page !== 'login.html' && page !== 'signup.html'){
-      loadPage('login.html');
-    }
-  }
-
-  // logged in user cant insert login or signup page
-  // redirect them to homepage
-  if(localStorage.auth_token === true || localStorage.auth_token === 'true'){
-    var path = window.location.pathname;
-    var page = path.split("/").pop();
-    if(page === 'login.html' || page === 'signup.html'){
-      loadPage('home.html');
-    }
-  }
-}
-
-// logout from account, and redirect to homepage
-function logout(){
-  localStorage.auth_token = false;
-  loadPage('login.html');
-}
-
-// login function
-function login(){
-  localStorage.auth_token = true;
-  loadPage('home.html');
 }
 
 // change displayed language
@@ -166,10 +126,16 @@ function startScanning() {
                 "Result: " + result.text + "\n" +
                 "Format: " + result.format + "\n" +
                 "Cancelled: " + result.cancelled);
-
+              var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
+              var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
               $.ajax({
-                url: serverSite+"/get/"+result.text,
-                context: document.body
+                type: "GET", 
+                crossDomain: true, 
+                url: serverSite+"api/site?site="+parseInt(result.text),
+                dataType: 'json', 
+                cache: false, 
+                headers: {"username":username, "token":token},
+                data: {"site": 1}
               }).done(function() {
                //
               });           
