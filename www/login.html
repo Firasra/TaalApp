@@ -1,8 +1,8 @@
-<form action="/" method="POST">
+<form action="" onsubmit="return loginAction($(this));" method="POST">
 	<ul>
 		<li>
-			<label for="phone" translate="PHONE"></label>
-			<input type="text" name="phone"><br>
+			<label for="username" translate="USERNAME"></label>
+			<input type="text" name="username"><br>
 		</li>
 
 		<li>
@@ -11,9 +11,8 @@
 		</li>
 
 		<li>
-			<input type="submit" name="submit" translate="LOGIN"><br>
+			<input type="submit" translate="LOGIN"><br>
 		</li>
 
 	</ul>
 </form>
-<button onclick="login()">login</button>

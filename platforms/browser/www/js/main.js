@@ -1,29 +1,93 @@
-checkLogin();
-
 $(document).ready(function(){
-  loadPage('home.html');
-
+  
+  isLoggedin();
   changeLanguage();
 
-  loginAjax();
-
-  document.addEventListener("deviceready", onDeviceReady, false);
+  // document.addEventListener("deviceready", onDeviceReady, false);
 });
 
-function loginAjax(){
-
-  $.ajax({
-  type: "POST", 
-  crossDomain: true, 
-  url: serverSite+"api/login", 
-  dataType: 'json', 
-  cache: false, 
-  headers:{ "username" : "student", "password": "qwe123" } });
+function getFormParams(form){
+  var data = form.serializeArray().reduce(function(obj, item) {
+                  obj[item.name] = item.value;
+                  return obj;
+              }, {});
+  return data;
 }
 
-function koko(){
-  
+function loginAction(form){
+  var form_data = getFormParams(form);
+  if ( typeof form_data.username !== 'undefined' && typeof form_data.password !== 'undefined' ) {
+    $.ajax({
+      type: "POST", 
+      crossDomain: true, 
+      url: serverSite+"api/login", 
+      dataType: 'json', 
+      cache: false, 
+      data: form_data 
+    }).done(function(response) {
+      if (typeof response.success !== 'undefined' && response.success ) {
+        if (typeof response.data !== 'undefined' &&
+            typeof response.data.token !== 'undefined' && typeof response.data.username !== 'undefined' ) {
+          var data = response.data;
+          localStorage.auth_token = response.data.token;
+          localStorage.username = response.data.username;
+          loadPage('home.html');
+        }
+      }
+    }); 
+  } 
+  return false;
 }
+
+function logoutAction(){
+  if (typeof localStorage.auth_token !== 'undefined' && typeof localStorage.username !== 'undefined') {
+    var token    = localStorage.auth_token;
+    var username = localStorage.username;
+    $.ajax({
+      type: "POST", 
+      crossDomain: true, 
+      url: serverSite+"api/logout", 
+      dataType: 'json', 
+      cache: false, 
+      headers:{ "username" : username, "token": token } 
+    }).done(function(response) {
+      if (typeof response.success !== 'undefined' && response.success ) {
+        logout();   
+      }
+    }); 
+  }
+}
+
+function isLoggedin(){
+  var path = window.location.pathname;
+  var page = path.split("/").pop();
+  if(page !== 'login.html' && page !== 'signup.html'){
+    var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
+    var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
+    $.ajax({
+      type: "POST", 
+      crossDomain: true, 
+      url: serverSite+"api/isLogged", 
+      dataType: 'json', 
+      cache: false, 
+      headers:{ "username" : username, "token": token } 
+    }).done(function(response) {
+      if (! (typeof response.success !== 'undefined' && response.success) ) {
+        logout();
+      }else{
+        loadPage('home.html');
+      }
+    }); 
+  }
+}
+
+function logout(){
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('username');
+  loadPage('login.html');   
+}
+
+
 
 // load html template content
 function loadPage(wantedPage){
@@ -34,13 +98,15 @@ function loadPage(wantedPage){
 }
 
 function checkLogin(){
+
+
   // if its the first time user enter the app
-  if(typeof localStorage.logged_in === 'undefined'){
-    localStorage.logged_in = false;
+  if(typeof localStorage.auth_token === 'undefined'){
+    localStorage.auth_token = false;
   }
 
   // check if user has not logged in yet, redirect to login page
-  if(localStorage.logged_in === false || localStorage.logged_in === 'false'){
+  if(localStorage.auth_token === false || localStorage.auth_token === 'false'){
     var path = window.location.pathname;
     var page = path.split("/").pop();
     if(page !== 'login.html' && page !== 'signup.html'){
@@ -50,7 +116,7 @@ function checkLogin(){
 
   // logged in user cant insert login or signup page
   // redirect them to homepage
-  if(localStorage.logged_in === true || localStorage.logged_in === 'true'){
+  if(localStorage.auth_token === true || localStorage.auth_token === 'true'){
     var path = window.location.pathname;
     var page = path.split("/").pop();
     if(page === 'login.html' || page === 'signup.html'){
@@ -61,13 +127,13 @@ function checkLogin(){
 
 // logout from account, and redirect to homepage
 function logout(){
-  localStorage.logged_in = false;
+  localStorage.auth_token = false;
   loadPage('login.html');
 }
 
 // login function
 function login(){
-  localStorage.logged_in = true;
+  localStorage.auth_token = true;
   loadPage('home.html');
 }
 
