@@ -24,9 +24,11 @@ function loginAction(form){
           localStorage.auth_token = response.data.token;
           localStorage.username = response.data.username;
           loadPage('home.html');
-          $('#scan').click();
         } 
       }
+
+      $("#loginexample").html('user not exist');
+
     }); 
   } 
   return false;
@@ -78,7 +80,7 @@ function logout(){
 
 // load html template content
 function loadPage(wantedPage){
-  window.location.href = "/" + wantedPage;
+  window.location.href =  wantedPage;
 }
 
 // change displayed language

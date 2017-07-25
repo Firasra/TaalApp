@@ -3,7 +3,7 @@ $(document).ready(function(){
   isLoggedin();
   changeLanguage();
   startScanning();
-
+  $('button#startScanning').click();
 });
 
 function loggedin(){
@@ -17,7 +17,7 @@ function notLoggedin(){
 
 function startScanning() {     
 
-    $('#scan').click( function() {
+    $('button#startScanning').click( function() {
           cordova.plugins.barcodeScanner.scan(
           function (result) {
              alert("We got a barcode\n" +
@@ -29,13 +29,13 @@ function startScanning() {
               $.ajax({
                 type: "GET", 
                 crossDomain: true, 
-                url: serverSite+"api/site?site="+parseInt(result.text),
+                url: serverSite+"api/site",
                 dataType: 'json', 
                 cache: false, 
                 headers: {"username":username, "token":token},
-                data: {"site": 1}
-              }).done(function() {
-               //
+                data: {"site": parseInt(result.text)}
+              }).done(function(response) {
+                $("#example").html(response.data.site.description);
               });           
           }, 
           function (error) {
@@ -56,5 +56,3 @@ function startScanning() {
         }
      );
 }
-
-
