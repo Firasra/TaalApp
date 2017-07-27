@@ -1,15 +1,40 @@
-<div class="menu red" translate="SETTINGS"></div>
-		<div class="menu green" translate="LEARN"></div>
-		<div class="menu blue" id="scan" translate="SCAN"></div>
-		<div class="menu yellow" translate="FEEDBACK"></div>
-		<button translate="FEEDBACK"></button>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <script src="js/jquery.min.js" ></script>
+        <script src="js/config.js" ></script>
+		<script src="js/translation.js" ></script>
+		<script src="js/main.js" ></script>
+        <script src="js/Controllers/homeController.js" ></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title translate="APP_NAME"></title>
+    </head>
+    <body>
+        <script type="text/javascript" src="cordova.js"></script>
 
-		<select>
-			<option value="1" translate="APP_NAME"></option>
-			<option value="2" translate="APP_NAME"></option>
-			<option value="3" translate="APP_NAME"></option>
-		</select>
+        <div id="page_content">
+            <div class="menu red" translate="SETTINGS"></div>
+            <div class="menu green" translate="LEARN"></div>
+            <button class="menu blue" id="startScanning" translate="SCAN"></button>
+            <div class="menu yellow" translate="FEEDBACK"></div>
+            <button translate="FEEDBACK"></button>
 
-		<br><br>
+            <select>
+                <option value="1" translate="APP_NAME"></option>
+                <option value="2" translate="APP_NAME"></option>
+                <option value="3" translate="APP_NAME"></option>
+            </select>
 
-		<button onclick="logout()">logout</button>
+            <br><br>
+
+            <div id="site_wrapper"></div> </br></br>
+
+            <button onclick="logoutAction()">logout</button>
+        </div>
+
+		<button onclick="changeLanguage('he')" translate="HEBREW"></button>
+		<button onclick="changeLanguage('ar')" translate="ARABIC"></button>
+    </body>
+</html>
