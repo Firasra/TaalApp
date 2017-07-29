@@ -4,37 +4,59 @@
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <script src="js/jquery.min.js" ></script>
+        <script type="text/javascript" src="js/lib/slick.min.js"></script>
         <script src="js/config.js" ></script>
 		<script src="js/translation.js" ></script>
 		<script src="js/main.js" ></script>
         <script src="js/Controllers/homeController.js" ></script>
+        <link rel="stylesheet" type="text/css" href="css/lib/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="css/lib/slick-theme.css"/>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <title translate="APP_NAME"></title>
     </head>
     <body>
+
         <script type="text/javascript" src="cordova.js"></script>
 
         <div id="page_content">
-            <div class="menu red" translate="SETTINGS"></div>
-            <div class="menu green" translate="LEARN"></div>
-            <button class="menu blue" id="startScanning" translate="SCAN"></button>
-            <div class="menu yellow" translate="FEEDBACK"></div>
-            <button translate="FEEDBACK"></button>
+            <div id="tasks_nav">
+                    <!-- <div class="task_nav">fir</div>
+                    <div class="task_nav">sec</div>
+                    <div class="task_nav">thir</div> -->
+            </div>
+            </br></br></br></br>
+             
+            
+            <div id="site_wrapper">
+                <button class="menu blue" id="startScanning" translate="SCAN"></button>
+                <h1 id="site_title"></h1>
+                <div id="site_description"></div>
+                <img src="" />
+                <button id="go_to_stations" translate="GO_TO_STATIONS"></button>
+                </br></br>
+                <button onclick="changeLanguage('he')" translate="HEBREW"></button>
+                <button onclick="changeLanguage('ar')" translate="ARABIC"></button>
+                </br></br>
+                <button onclick="logoutAction()">logout</button>
+            </div>
 
-            <select>
-                <option value="1" translate="APP_NAME"></option>
-                <option value="2" translate="APP_NAME"></option>
-                <option value="3" translate="APP_NAME"></option>
-            </select>
+            <div id="stations_wrapper">
+               
+                <div id="stations"></div>
+                <button id="go_to_tasks" translate="START"></button>
+                
+            </div>
 
             <br><br>
-
-            <div id="site_wrapper"></div> </br></br>
-
-            <button onclick="logoutAction()">logout</button>
+            <div id="tasks_wrapper">
+                <!-- <div class="task">first</div>
+                <div class="task">second</div>
+                <div class="task">third</div> -->
+            </div>
+            </br></br>
+            
         </div>
 
-		<button onclick="changeLanguage('he')" translate="HEBREW"></button>
-		<button onclick="changeLanguage('ar')" translate="ARABIC"></button>
+		
     </body>
 </html>

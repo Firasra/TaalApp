@@ -24,5 +24,8 @@ var translation = {
 		"PASSWORD"		: "كلمة السر",
 		"LOGIN"   		: "تسجيل دخول",
 		"PLACE_QRCODE"	: "ضع الرمز بوسط الشاشة",
+
+		"START"			: "إبدأ",
+		"GO_TO_STATIONS" : "المحطات",
 	}
 };

@@ -1,5 +1,6 @@
 body{
 	direction: rtl;
+	background: grey;
 }
 
 div.menu{
@@ -23,4 +24,34 @@ div.menu{
 
 .yellow{
 	background-color: yellow;
+}
+
+#tasks_wrapper{
+	direction: ltr !important;
+}
+
+.task{
+	background: #000;
+	color: #3498db;
+	font-size: 36px;
+	line-height: 100px;
+	margin: 10px;
+	padding: 2%;
+	position: relative;
+	text-align: center;
+}
+
+.task_nav{
+	background: #000;
+	color: #3498db;
+	font-size: 15px;
+	/* line-height: 50px; */
+	margin: 10px; 
+	padding: 1%;
+	/* position: relative; */
+	text-align: center;
+}
+
+.hide{
+	display: none;
 }
