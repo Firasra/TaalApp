@@ -27,5 +27,9 @@ var translation = {
 
 		"START"			: "إبدأ",
 		"GO_TO_STATIONS" : "المحطات",
+		"NEXT_STATION"  : "إلى المحطة التالية",
+		"FINISH"		: "إنتهيت",
+		"GOOD_WORK"		: "ممتاز ",
+		"SUBMIT"		: "تثبيت",
 	}
 };
