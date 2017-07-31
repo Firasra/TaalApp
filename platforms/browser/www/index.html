@@ -12,11 +12,41 @@
         <title translate="APP_NAME"></title>
     </head>
     <body>
-        <script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
 
-        <div id="page_content"></div>
+		<div class="outer">
+			<div class="middle">
+				<div id="page_content">
+					<form id="loginForm" action="" onsubmit="return loginAction($(this));" method="POST">
+						<legend><h2>تسجيل دخول</h2></legend>
+						<ul>
+							<li>
+								<label for="username" translate="USERNAME"></label>
+								<input type="text" name="username"><br>
+							</li>
 
-		<button onclick="changeLanguage('he')" translate="HEBREW"></button>
-		<button onclick="changeLanguage('ar')" translate="ARABIC"></button>
+							<li>
+								<label for="password" translate="PASSWORD"></label>
+								<input type="password" name="password"><br>
+							</li>
+
+							<li>
+								<label></label>
+								<input type="submit" translate="LOGIN"><br>
+							</li>
+
+						</ul>
+						<div id="loginError"></div>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+		</br></br>
+		
+		</br></br>
+		<!-- <button onclick="changeLanguage('he')" translate="HEBREW"></button>
+		<button onclick="changeLanguage('ar')" translate="ARABIC"></button> -->
     </body>
 </html>

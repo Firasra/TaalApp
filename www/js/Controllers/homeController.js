@@ -1,3 +1,4 @@
+$("#loader_container").show();
 var site_data = {};
 
 $(document).ready(function(){
@@ -56,6 +57,7 @@ function activeSlick(){
     adaptiveHeight: true
   });*/
 
+  $("#loader_container").show();
 
   $('#tasks_wrapper').slick({
     slidesToShow: 1,
@@ -77,6 +79,8 @@ function activeSlick(){
     focusOnSelect: true,
     infinite: false
   });
+  
+  $("#loader_container").fadeOut("slow");
 }   
 
 function loggedin(){
@@ -97,28 +101,35 @@ function clearSiteData(){
 }
 
 function goToStart(){
+  $("#loader_container").show();
   $("button#go_to_stations").addClass('hide');
   $("div#stations_wrapper").hide();
   $("div#tasks_wrapper").hide();
   $("div#tasks_nav").hide();
   $("button#next_station").addClass('hide');
   $("button#finish_site").addClass('hide');
+  $("#loader_container").fadeOut("slow");
 }
 
 function goToStations(){
+  $("#loader_container").show();
   $("#site_wrapper").hide();
   $("div#stations_wrapper").show();
+  $("#loader_container").fadeOut("slow");
 }
 
 function startTasks(){
+  $("#loader_container").show();
   $("div#stations_wrapper").hide();
   $("div#tasks_wrapper").show();
   $("div#tasks_nav").show();
   $("div#current_station").removeClass('hide'); 
   activeSlick();
+  $("#loader_container").fadeOut("slow");
 }
 
 function goToSpecificStationTasks(station_number){
+  $("#loader_container").show();
   $("div#tasks_wrapper").html('');
   $("div#tasks_nav").html('');
   var station = site_data.stations[station_number];
@@ -135,6 +146,7 @@ function goToSpecificStationTasks(station_number){
   $("div#stations").attr('next_station', station_number+1);
   $("div#tasks_wrapper").attr('class', '');
   $("div#tasks_nav").attr('class', '');
+  $("#loader_container").fadeOut("slow");
 }
 
 function goToFaqs(){
@@ -143,7 +155,8 @@ function goToFaqs(){
 
 function startScanning() {     
     $('button#startScanning').click( function() {
-      
+    
+      $("#loader_container").show();
       clearSiteData();
       cordova.plugins.barcodeScanner.scan(
       function (result) {
@@ -165,6 +178,7 @@ function startScanning() {
             if(typeof response.success !== 'undefined' && response.success &&
                typeof response.data !== 'undefined'){
                  site_data = response.data.site;
+                 localStorage.site_id = site_data.id;
                  var stations = site_data.stations;
                  // insert site data
                 $("h1#site_title").html(site_data.name);    
@@ -183,6 +197,7 @@ function startScanning() {
             }
             $("div#current_station").addClass('hide');
             $("button#go_to_stations").removeClass('hide');
+            $("#loader_container").fadeOut("slow");
           });           
       }, 
       function (error) {

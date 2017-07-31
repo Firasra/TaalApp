@@ -1,6 +1,14 @@
+html, body /*, div#page_content*/ {
+    margin: 0;
+	height: 100%;
+	width: 100%;
+	font-family: Calibri;
+	color: #726f6f;
+}
+
 body{
 	direction: rtl;
-	background: grey;
+	background: #3db39d;
 }
 
 div.menu{
@@ -54,4 +62,131 @@ div.menu{
 
 .hide{
 	display: none;
+}
+/*
+div#page_content{
+	display: table;
+}
+
+form#loginForm{
+	margin: auto;
+	width: 50%;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+*/
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div#page_content{
+    margin-left: auto;
+    margin-right: auto; 
+	width: 45%;
+	
+}
+
+form{
+	padding: 10px;
+	background: white;
+	border-radius: 10px;
+}
+
+form legend{
+	width: 100%;
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+form ul{
+	padding: 0;
+}
+
+form ul li{
+	margin-bottom: 10px;
+}
+
+form ul li label{
+	display: inline-block;
+	width: 20%;
+}
+
+form input[type="text"], input[type="password"] {
+	background: #e5e5e5;
+	border: none;
+	border-radius: 3px;
+	color: #5a5656;
+	font-family: inherit;
+	font-size: 17px;
+	height: 50px;
+	outline: none;
+	/* padding: 0px 10px; */
+	width: 70%;
+  -webkit-appearance:none;
+}
+
+form input[type="submit"] {
+	background-color: #3db39d;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	cursor: pointer;
+	font-family: inherit;
+	height: 50px;
+	text-transform: uppercase;
+	width: 74%;
+	font-size: 20px;
+  -webkit-appearance:none;
+}
+
+li {list-style-type: none;}
+
+div#loginError{
+	color: red;
+	text-align: center;
+	font-weight: bold;
+}
+
+img#toggle_img{
+	position: fixed;
+	left: 10px; 
+	top: 0px;
+	width: 50px;
+	height: 50px;
+	transition: all 0.5s ease-in-out;
+}
+
+div#sidebar{
+	position: fixed; 
+	display: inline-block; 
+	top: 0px; 
+	height: 100%; 
+	width: 200px; 
+	left: -200px; 
+	background-color: black; 
+	transition: all 0.5s ease-in-out;
+}
+
+div#loader_container{
+	position: fixed;
+	background-color: white;
+	height: 100%;
+	width: 100%;
+	z-index: 9;
+}
+
+img#loader{
+	position: relative;
+	display: table-cell;
+	margin: auto;
+	top: 40%;
 }

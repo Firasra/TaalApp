@@ -31,5 +31,7 @@ var translation = {
 		"FINISH"		: "إنتهيت",
 		"GOOD_WORK"		: "ممتاز ",
 		"SUBMIT"		: "تثبيت",
+		"GO_TO_FAQS"	: "قم بتقييمي",
+		"LOGIN_ERROR"	: "معلومات المستخدم غير صحيحة",
 	}
 };

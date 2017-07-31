@@ -1,3 +1,4 @@
+$("#loader_container").show();
 $(document).ready(function(){
 
   changeLanguage();
@@ -10,5 +11,5 @@ function loggedin(){
 }
 
 function notLoggedin(){
-    logout();
+    $("#loader_container").fadeOut('slow');
 }

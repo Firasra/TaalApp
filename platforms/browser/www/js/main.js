@@ -7,6 +7,7 @@ function getFormParams(form){
 }
 
 function loginAction(form){
+  $("#loader_container").show();
   var form_data = getFormParams(form);
   if ( typeof form_data.username !== 'undefined' && typeof form_data.password !== 'undefined' ) {
     $.ajax({
@@ -27,7 +28,7 @@ function loginAction(form){
         } 
       }
 
-      $("#loginexample").html('user not exist');
+      $("#loginError").html(translation[choosedLanguage]['LOGIN_ERROR']);
 
     }); 
   } 
@@ -54,6 +55,7 @@ function logoutAction(){
 }
 
 function isLoggedin(){
+  $("#loader_container").show();
   var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
   var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
   $.ajax({
@@ -73,9 +75,10 @@ function isLoggedin(){
 }
 
 function logout(){
+  $("#loader_container").show();
   localStorage.removeItem('auth_token');
   localStorage.removeItem('username');
-  loadPage('login.html');   
+  loadPage('index.html');   
 }
 
 // load html template content
@@ -102,3 +105,26 @@ function changeLanguage(language){
     
   })
 }
+
+function toggle_sidebar(){
+  var sidebar    = document.getElementById("sidebar");
+  var toggle_img = document.getElementById("toggle_img");
+
+  if(sidebar.style.left == "-200px")
+  {
+      sidebar.style.left = "0px";
+      toggle_img.style.left = "200px";
+  }
+  else
+  {
+      sidebar.style.left = "-200px";
+      toggle_img.style.left = "0px";
+  }
+}
+
+$(document).ready(function(){
+  var sidebar    = document.getElementById("sidebar");
+  var toggle_img = document.getElementById("toggle_img");
+  sidebar.style.left = "-200px";
+  toggle_img.style.left = "0px";
+})

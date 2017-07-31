@@ -14,18 +14,21 @@
     <body>
 
         <script type="text/javascript" src="cordova.js"></script>
+        <div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
 
         <div id="page_content">
             <div translate="GOOD_WORK"></div>
+            <div>
+                <input type="submit" onclick="getFaq()" translate="GO_TO_FAQS">
+            </div>
 
             <div id="faq_wrapper">
                 <form id="faq_form" action="" onsubmit="return faqAction($(this));" method="POST">
                     <ul id="faq"></ul>
-                    <div>
-						<input type="submit" translate="SUBMIT">
-                    </div>
+                    <input type="submit" translate="SUBMIT">
                 </form>
             </div>
+             
         </div>
 		
     </body>

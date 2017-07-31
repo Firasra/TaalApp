@@ -18,6 +18,12 @@
 
         <script type="text/javascript" src="cordova.js"></script>
 
+        <div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
+        <img id="toggle_img" class="toggle" src="http://labs.qnimate.com/slide-out-sidebar/icon-mobile.png" onclick="toggle_sidebar()" />
+        <div id="sidebar">
+            sda
+        </div>
+
         <div id="page_content">
 
             <div id="current_station"></div>
@@ -36,8 +42,8 @@
                 <img src="" />
                 <button id="go_to_stations" translate="GO_TO_STATIONS"></button>
                 </br></br>
-                <button onclick="changeLanguage('he')" translate="HEBREW"></button>
-                <button onclick="changeLanguage('ar')" translate="ARABIC"></button>
+                <!-- <button onclick="changeLanguage('he')" translate="HEBREW"></button>
+                <button onclick="changeLanguage('ar')" translate="ARABIC"></button> -->
                 </br></br>
                 <button onclick="logoutAction()">logout</button>
             </div>
