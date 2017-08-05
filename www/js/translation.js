@@ -33,5 +33,9 @@ var translation = {
 		"SUBMIT"		: "تثبيت",
 		"GO_TO_FAQS"	: "قم بتقييمي",
 		"LOGIN_ERROR"	: "معلومات المستخدم غير صحيحة",
+		"LOGOUT"		: "تسجيل خروج",
+		"SELF_HELP"		: "مساعدة ذاتية",
+		"LOCAL_HELP"	: "مساعدة محلية",
+		"REMOTE_HELP"	: "مساعدة من بعيد",
 	}
 };

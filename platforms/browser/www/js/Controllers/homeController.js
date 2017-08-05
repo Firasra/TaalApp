@@ -44,6 +44,59 @@ $(document).ready(function(){
     goToFaqs();
   });
 
+  $("#logoutButton").click(function(){
+    swal({
+      title: "تحذير",
+      text: "لتسجيل الخروج يجب إدخال اسم المستخدم",
+      type: "input",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: "slide-from-top",
+      inputPlaceholder: "أدخل اسم المستخدم",
+      confirmButtonText: "تسجيل خروج",
+      cancelButtonText: "إلغاء",
+    },
+    function(inputValue){
+      if (inputValue === false) return false;
+      
+      if (inputValue === "") {
+        swal.showInputError("يجب أن تقوم بإدخال اسم المستخدم");
+        return false
+      }
+      var loggedin_username = localStorage.username;
+      if(loggedin_username == inputValue){
+        logoutAction();
+      }else{
+        swal.showInputError("اسم المستخدم غير متطابق");
+        return false
+      }
+      
+    });
+
+    // swal({
+    //   title: "تحذير",
+    //   text: "هل بالتأكيد تريد تسجيل الخروج؟",
+    //   type: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#DD6B55",
+    //   confirmButtonText: "نعم!",
+    //   cancelButtonText: "لا",
+    //   closeOnConfirm: false
+    // },
+    // function(){
+    //   logoutAction();
+    // });
+    
+  });
+
+  $("#selfHelp, #localHelp, #remoteHelp").click(function(){
+    swal({
+      title: 'قريبا! في النسخة القادمة',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+
 });
 
 function activeSlick(){
@@ -183,11 +236,13 @@ function startScanning() {
                  // insert site data
                 $("h1#site_title").html(site_data.name);    
                 $("div#site_description").html(site_data.description);
+                $("img#site_image").attr('src', serverSite+'uploads/default.jpg');
                 // insert stations data
                 if(stations.length !== 0){   
                   for(var i in stations){
                     var station = stations[i];
-                    $("div#stations").append('<div>'+station.name+'</div>');
+                    $("div#stations").append('<button type="button" class="btn btn-primary station">'+station.name+'</button>');
+                    $("div#stations").append('<div><i class="fa fa-long-arrow-down" aria-hidden="true"></i></div>');
                     // insert tasks data of first station            
                     $("div#stations").attr('next_station', 1);
                   }

@@ -27,7 +27,7 @@ function loginAction(form){
           loadPage('home.html');
         } 
       }
-
+      $("#loader_container").hide();
       $("#loginError").html(translation[choosedLanguage]['LOGIN_ERROR']);
 
     }); 
