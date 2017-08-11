@@ -10,11 +10,15 @@ $(document).ready(function(){
 
   goToStart();
 
+  $("#site_title").hide();
+  $("#site_data_wrapper").hide();
+  $("#startScanning").show();
+
   $("#go_to_stations").click(function(){
     goToStations();
   });
 
-  $("#go_to_tasks").click(function(){
+  $("div#stations").on("click", "button#go_to_tasks", function(){
     startTasks();
   });
 
@@ -113,6 +117,7 @@ function activeSlick(){
   $("#loader_container").show();
 
   $('#tasks_wrapper').slick({
+    rtl: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -124,6 +129,7 @@ function activeSlick(){
   var tasks_number = $('#tasks_nav .task_nav').length;
 
   $('#tasks_nav').slick({
+    rtl: true,
     slidesToShow: tasks_number,
     slidesToScroll: 1,
     asNavFor: '#tasks_wrapper',
@@ -134,6 +140,7 @@ function activeSlick(){
   });
   
   $("#loader_container").fadeOut("slow");
+  $("#myAudioElement0")[0].play();
 }   
 
 function loggedin(){
@@ -186,12 +193,21 @@ function goToSpecificStationTasks(station_number){
   $("div#tasks_wrapper").html('');
   $("div#tasks_nav").html('');
   var station = site_data.stations[station_number];
-  $("div#current_station").html(station.name);
+  $("div#current_station").empty();
+  $("div#current_station").append('<h2>' + station.name +'</h2>');
   $("div#current_station").removeClass('hide');
   for(var j in station.tasks){
     var task = station.tasks[j];
     var task_nav_html = '<div class="task_nav">' + task.name + '</div>';
-    var task_html = '<div class="task">' + task.name + '</div>';
+    var task_html = '<div class="task">' + 
+                      '<div>' + task.name + '</div>' + 
+                      '<img src="' + serverSite + 'uploads/default.jpg' + '" class="task_img" />' +
+                      '<div class="task_description" >' + task.description + '</div>' +
+                      '<audio id="myAudioElement' + j + '" controls>' +
+                        '<source src="' + serverSite + 'uploads/' + task.sound + '" type="audio/ogg">' +
+                        '<source src="' + serverSite + 'uploads/' + task.sound + '" type="audio/mpeg">' +    
+                      '</audio>'
+                    '</div>';
     $("div#tasks_wrapper").append(task_html);
     $("div#tasks_nav").append(task_nav_html);
   }
@@ -230,9 +246,12 @@ function startScanning() {
           }).done(function(response) {
             if(typeof response.success !== 'undefined' && response.success &&
                typeof response.data !== 'undefined'){
-                 site_data = response.data.site;
-                 localStorage.site_id = site_data.id;
-                 var stations = site_data.stations;
+                site_data = response.data.site;
+                localStorage.site_id = site_data.id;
+                var stations = site_data.stations;
+                $("#site_title").show();
+                $("#site_data_wrapper").show();   
+                $("#startScanning").hide();
                  // insert site data
                 $("h1#site_title").html(site_data.name);    
                 $("div#site_description").html(site_data.description);
@@ -241,8 +260,12 @@ function startScanning() {
                 if(stations.length !== 0){   
                   for(var i in stations){
                     var station = stations[i];
-                    $("div#stations").append('<button type="button" class="btn btn-primary station">'+station.name+'</button>');
-                    $("div#stations").append('<div><i class="fa fa-long-arrow-down" aria-hidden="true"></i></div>');
+                    var id = i == 0 ? 'id="go_to_tasks"' : '';
+                    var buttonClass = i == 0 ? 'btn-success' : 'btn-default';
+                    $("div#stations").append('<button type="button" ' + id + ' class="btn ' + buttonClass + ' station">'+station.name+'</button>');
+                    if( i < stations.length -1){
+                      $("div#stations").append('<div class="vertical_line"></div>');
+                    }
                     // insert tasks data of first station            
                     $("div#stations").attr('next_station', 1);
                   }

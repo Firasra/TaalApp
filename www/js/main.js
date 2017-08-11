@@ -109,6 +109,7 @@ function changeLanguage(language){
 function toggle_sidebar(){
   var sidebar    = document.getElementById("sidebar");
   var toggle_img = document.getElementById("toggle_img");
+  $("#toggle_img").toggleClass('flipped');
 
   if(sidebar.style.left == "-200px")
   {

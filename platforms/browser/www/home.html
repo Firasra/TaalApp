@@ -23,7 +23,7 @@
         <script type="text/javascript" src="cordova.js"></script>
 
         <div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
-        <img id="toggle_img" class="toggle" src="http://labs.qnimate.com/slide-out-sidebar/icon-mobile.png" onclick="toggle_sidebar()" />
+        <img id="toggle_img" class="toggle" src="images/icons/help.png" onclick="toggle_sidebar()" />
         <div id="sidebar">
             <div id="selfHelp"><span translate="SELF_HELP"></span></div>
             <div id="localHelp"><span translate="LOCAL_HELP"></span></div>
@@ -39,15 +39,18 @@
                     <div class="task_nav">sec</div>
                     <div class="task_nav">thir</div> -->
             </div>
-            </br></br></br></br>
              
-            
             <div id="site_wrapper">
-                <button class="menu blue" id="startScanning" translate="SCAN"></button>
+                <button class="menu btn btn-success" id="startScanning" translate="SCAN"></button>
                 <h1 id="site_title"></h1>
-                <div id="site_description"></div>
-                <img id="site_image" src="" />
-                <button id="go_to_stations" type="button" class="btn btn-primary" translate="GO_TO_STATIONS"></button>
+                <div id="site_data_wrapper">
+                    <div id="site_description"></div>
+                    <div id="site_img_wrapper"><img id="site_image" src="" /></div>
+                    <div id="go_to_stations_wrapper">
+                        <button id="go_to_stations" type="button" class="btn btn-success" translate="GO_TO_STATIONS"></button>
+                    </div>
+                </div>
+                
                 </br></br>
                 <!-- <button onclick="changeLanguage('he')" translate="HEBREW"></button>
                 <button onclick="changeLanguage('ar')" translate="ARABIC"></button> -->
@@ -55,9 +58,7 @@
             </div>
 
             <div id="stations_wrapper">
-                <div id="stations"></div>
-                <button id="go_to_tasks" translate="START"></button>
-                
+                <div id="stations"></div>                
             </div>
 
             <br><br>

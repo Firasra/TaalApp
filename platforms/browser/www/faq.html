@@ -8,6 +8,7 @@
 		<script src="js/translation.js" ></script>
 		<script src="js/main.js" ></script>
         <script src="js/Controllers/faqController.js" ></script>
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <title translate="APP_NAME"></title>
     </head>
@@ -15,21 +16,24 @@
 
         <script type="text/javascript" src="cordova.js"></script>
         <div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
-
-        <div id="page_content">
-            <div translate="GOOD_WORK"></div>
-            <div>
-                <input type="submit" onclick="getFaq()" translate="GO_TO_FAQS">
+        <div class="outer">
+            <div class="middle">
+                <div id="page_content">
+                    <div id="faq_text_wrapper">
+                        <div translate="GOOD_WORK"></div>
+                        <div>
+                            <button class="btn btn-success" onclick="getFaq()" translate="GO_TO_FAQS" />
+                        </div> 
+                    </div>
+                    <div id="faq_wrapper">
+                        <form id="faq_form" action="" onsubmit="return faqAction($(this));" method="POST">
+                            <ul id="faq"></ul>
+                            <input type="submit" translate="SUBMIT">
+                        </form>
+                    </div>
+                    
+                </div>
             </div>
-
-            <div id="faq_wrapper">
-                <form id="faq_form" action="" onsubmit="return faqAction($(this));" method="POST">
-                    <ul id="faq"></ul>
-                    <input type="submit" translate="SUBMIT">
-                </form>
-            </div>
-             
         </div>
-		
     </body>
 </html>

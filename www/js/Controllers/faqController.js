@@ -1,6 +1,8 @@
 $(document).ready(function(){
   isLoggedin();
   changeLanguage();
+
+  $("#faq_wrapper").hide();
 });
 
 function loggedin(){
@@ -33,6 +35,7 @@ function faqAction(form){
 
 function getFaq(){
   $("#loader_container").show();
+  $("#faq_text_wrapper").hide();
   var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
   var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
   var site_id = typeof localStorage.site_id !== 'undefined' ? localStorage.site_id : '';
@@ -67,8 +70,9 @@ function getFaq(){
                 element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>';
                 var attrs = JSON.parse(koko);// JSON.parse(faqs[i].attr)
                 for(var j in attrs){
-                  element += '<input type="radio" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> </li>' + attrs[j];
+                  element += '<div class="task_koko" ><input type="radio" id="aaa_' + faqs[i].site_faq_id + '_' + j + '" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> <label for="aaa_' + faqs[i].site_faq_id + '_' + j + '"><span><span></span></span>' + attrs[j] + '</label></div>';
                 }
+                element += '</li>';
                 break;
             }
             $("ul#faq").append(element);
@@ -77,5 +81,6 @@ function getFaq(){
     }
         
     $("#loader_container").fadeOut("slow");
+    $("#faq_wrapper").show();
   });
 }
