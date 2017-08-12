@@ -201,11 +201,11 @@ function goToSpecificStationTasks(station_number){
     var task_nav_html = '<div class="task_nav">' + task.name + '</div>';
     var task_html = '<div class="task">' + 
                       '<div>' + task.name + '</div>' + 
-                      '<img src="' + serverSite + 'uploads/default.jpg' + '" class="task_img" />' +
+                      '<img src="' + serverSite + 'uploads/images/default.jpg' + '" class="task_img" />' +
                       '<div class="task_description" >' + task.description + '</div>' +
                       '<audio id="myAudioElement' + j + '" controls>' +
-                        '<source src="' + serverSite + 'uploads/' + task.sound + '" type="audio/ogg">' +
-                        '<source src="' + serverSite + 'uploads/' + task.sound + '" type="audio/mpeg">' +    
+                        '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
+                        '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +    
                       '</audio>'
                     '</div>';
     $("div#tasks_wrapper").append(task_html);

@@ -124,9 +124,10 @@ form ul li{
 form ul li label{
 	display: inline-block;
 	width: 20%;
+	vertical-align: middle;
 }
 
-form input[type="text"], input[type="password"] {
+form input[type="text"], form textarea, input[type="password"] {
 	background: #fbfbfb;
     color: #000;
 	border: 1px solid #cecece;
@@ -135,7 +136,6 @@ form input[type="text"], input[type="password"] {
 	font-size: 17px;
 	height: 50px;
 	outline: none;
-	/* padding: 0px 10px; */
 	width: 70%;
   -webkit-appearance:none;
 }
@@ -157,9 +157,9 @@ div#loginError{
 img#toggle_img{
 	position: fixed;
 	left: 10px; 
-	top: 0px;
-	width: 50px;
-	height: 50px;
+	top: 2%;
+	width: 60px;
+	height: 40px;
 	z-index: 9;
 	transition: all 0.5s ease-in-out;
 }
@@ -185,6 +185,7 @@ div#loader_container{
 	background-color: white;
 	height: 100%;
 	width: 100%;
+	top: 0;
 	z-index: 9;
 }
 
@@ -393,7 +394,7 @@ input[type=radio]:not(old):checked + label > span > span{
   background-image :         linear-gradient(rgb(179,217,140),rgb(153,204,102));
 }
 
-.task_koko{
+.question_wrapper{
 	display: inline-block;
 	margin-left: 10px;
 }

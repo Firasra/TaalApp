@@ -56,24 +56,42 @@ function getFaq(){
             var element = '';
             var koko = '{"koko": "aaa", "bobo": "bbb"}';
             switch(faqs[i].type) {
-              case 'text1':
+              case 'text':
                 element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>' +
                           '<input type="text" name="' + faqs[i].site_faq_id + '"/> </li>';
                 break;
               
               case 'textarea':
                 element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>' +
-                          '<textarea type="text" name="' + faqs[i].site_faq_id +'" /> </li>';
+                          '<textarea name="' + faqs[i].site_faq_id +'" rows="4" /> </li>';
                 break;
 
-              case 'text':
+              case 'radio':
                 element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>';
-                var attrs = JSON.parse(koko);// JSON.parse(faqs[i].attr)
+                var attrs = JSON.parse(faqs[i].attr);
                 for(var j in attrs){
-                  element += '<div class="task_koko" ><input type="radio" id="aaa_' + faqs[i].site_faq_id + '_' + j + '" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> <label for="aaa_' + faqs[i].site_faq_id + '_' + j + '"><span><span></span></span>' + attrs[j] + '</label></div>';
+                  element += '<div class="question_wrapper" ><input type="radio" id="question_' + faqs[i].site_faq_id + '_' + j + '" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> <label for="question_' + faqs[i].site_faq_id + '_' + j + '"><span><span></span></span>' + attrs[j] + '</label></div>';
                 }
                 element += '</li>';
                 break;
+
+              case 'select':
+                element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>';
+                var attrs = JSON.parse(faqs[i].attr);
+                element += '<div class="question_wrapper" > <select name="' + faqs[i].site_faq_id + '">';
+                for(var j in attrs){
+                  element += '<option id="question_' + faqs[i].site_faq_id + '_' + j + '" value="' + attrs[j] + '" >' + attrs[j] + '</option>';
+                }
+                element += '</select></div></li>';
+                break;
+              // case 'checkbox':
+              //   element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>';
+              //   var attrs = JSON.parse(faqs[i].attr);
+              //   for(var j in attrs){
+              //     element += '<div class="question_wrapper" ><input type="checkbox" id="question_' + faqs[i].site_faq_id + '_' + j + '" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> <label for="question_' + faqs[i].site_faq_id + '_' + j + '"><span><span></span></span>' + attrs[j] + '</label></div>';
+              //   }
+              //   element += '</li>';
+              //   break;
             }
             $("ul#faq").append(element);
           }
