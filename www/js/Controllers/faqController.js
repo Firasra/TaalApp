@@ -1,8 +1,19 @@
 $(document).ready(function(){
   isLoggedin();
   changeLanguage();
-
+  var site_start = localStorage.site_start;
+  var current_time = Math.floor(Date.now() / 1000);
+  var time_diff = current_time - site_start;
+  var minutes = Math.round(Number(time_diff/60));
+  var seconds = time_diff - (minutes*60);
+  $("#site_time_minutes").html(minutes);
+  $("#site_time_seconds").html(seconds);
   $("#faq_wrapper").hide();
+
+  setTimeout(function() {
+    $("#fireworks").fireworks();
+  });
+  
 });
 
 function loggedin(){
@@ -16,6 +27,15 @@ function notLoggedin(){
 function faqAction(form){
   $("#loader_container").show();
   var form_data = {'site_faq_ids' : getFormParams(form)};
+  for(var i in form_data['site_faq_ids']){
+    if(form_data['site_faq_ids'][i] == ''){
+      $("div#faqError").show();
+      $("div#faqError").html(translation[choosedLanguage]['FAQ_ERROR']);
+      $("div#faqError").attr('translate', translation[choosedLanguage]['FAQ_ERROR']);
+      $("#loader_container").hide();
+      return false;
+    }
+  }
   var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
   var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
 
@@ -100,5 +120,6 @@ function getFaq(){
         
     $("#loader_container").fadeOut("slow");
     $("#faq_wrapper").show();
+    $("#fireworks").hide();
   });
 }

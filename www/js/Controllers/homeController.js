@@ -8,6 +8,8 @@ $(document).ready(function(){
   startScanning();
   //$('button#startScanning').click();
 
+  localStorage.removeItem('site_start');
+
   goToStart();
 
   $("#site_title").hide();
@@ -37,68 +39,15 @@ $(document).ready(function(){
     }
   });
 
-  $("button#next_station").click(function(){
+  $("div").on('click', "button#next_station", function(){
     var next_station = $("div#stations").attr('next_station');
     goToSpecificStationTasks( next_station );
     activeSlick();
     $("button#next_station").addClass('hide');
   });
 
-  $("button#finish_site").click(function(){
+  $("div").on('click', "button#finish_site",function(){
     goToFaqs();
-  });
-
-  $("#logoutButton").click(function(){
-    swal({
-      title: "تحذير",
-      text: "لتسجيل الخروج يجب إدخال اسم المستخدم",
-      type: "input",
-      showCancelButton: true,
-      closeOnConfirm: false,
-      animation: "slide-from-top",
-      inputPlaceholder: "أدخل اسم المستخدم",
-      confirmButtonText: "تسجيل خروج",
-      cancelButtonText: "إلغاء",
-    },
-    function(inputValue){
-      if (inputValue === false) return false;
-      
-      if (inputValue === "") {
-        swal.showInputError("يجب أن تقوم بإدخال اسم المستخدم");
-        return false
-      }
-      var loggedin_username = localStorage.username;
-      if(loggedin_username == inputValue){
-        logoutAction();
-      }else{
-        swal.showInputError("اسم المستخدم غير متطابق");
-        return false
-      }
-      
-    });
-
-    // swal({
-    //   title: "تحذير",
-    //   text: "هل بالتأكيد تريد تسجيل الخروج؟",
-    //   type: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#DD6B55",
-    //   confirmButtonText: "نعم!",
-    //   cancelButtonText: "لا",
-    //   closeOnConfirm: false
-    // },
-    // function(){
-    //   logoutAction();
-    // });
-    
-  });
-
-  $("#selfHelp, #localHelp, #remoteHelp").click(function(){
-    swal({
-      title: 'قريبا! في النسخة القادمة',
-      timer: 2000,
-      showConfirmButton: false
-    });
   });
 
 });
@@ -199,22 +148,47 @@ function goToSpecificStationTasks(station_number){
   for(var j in station.tasks){
     var task = station.tasks[j];
     var task_nav_html = '<div class="task_nav">' + task.name + '</div>';
-    var task_html = '<div class="task">' + 
-                      '<div>' + task.name + '</div>' + 
-                      '<img src="' + serverSite + 'uploads/images/default.jpg' + '" class="task_img" />' +
-                      '<div class="task_description" >' + task.description + '</div>' +
-                      '<audio id="myAudioElement' + j + '" controls>' +
-                        '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
-                        '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +    
-                      '</audio>'
-                    '</div>';
+    var task_html = '<div class="task">';
+
+    if(typeof task.name !== 'undefined' && task.name !== ''){
+      task_html += '<div>' + task.name + '</div>';
+    }
+
+    if(typeof task.picture !== 'undefined' && task.picture !== ''){
+      task_html += '<img src="' + serverSite + 'uploads/images/' + task.picture + '" class="task_img" />';
+    }
+
+    if(typeof task.description !== 'undefined' && task.description !== ''){
+      task_html += '<div class="task_description" >' + task.description + '</div>';
+    }
+    
+    if(typeof task.sound !== 'undefined' && task.sound !== ''){
+      task_html +=  '<audio id="myAudioElement' + j + '" controls>' +
+                      '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
+                      '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +    
+                    '</audio>';
+    }
+    
+    task_html += '</div>';
+
     $("div#tasks_wrapper").append(task_html);
     $("div#tasks_nav").append(task_nav_html);
   }
-  
-  $("div#stations").attr('next_station', station_number+1);
+    
+  $("div#stations").attr('next_station', Number(station_number)+1);
   $("div#tasks_wrapper").attr('class', '');
   $("div#tasks_nav").attr('class', '');
+
+  var task_html = '<div class="task">';
+  var next_station = $("div#stations").attr('next_station');
+  if( next_station < site_data.stations.length ){
+    task_html += '<button id="next_station" class="btn btn-success" translate="NEXT_STATION">' + translation[choosedLanguage]['NEXT_STATION'] + '</button>';
+  }else{
+    task_html += '<button id="finish_site" class="btn btn-success" translate="FINISH">' + translation[choosedLanguage]['FINISH'] + '</button>'
+  }
+  task_html += '</div>';
+  $("div#tasks_wrapper").append(task_html);
+
   $("#loader_container").fadeOut("slow");
 }
 
@@ -252,10 +226,25 @@ function startScanning() {
                 $("#site_title").show();
                 $("#site_data_wrapper").show();   
                 $("#startScanning").hide();
+                
                  // insert site data
-                $("h1#site_title").html(site_data.name);    
-                $("div#site_description").html(site_data.description);
-                $("img#site_image").attr('src', serverSite+'uploads/default.jpg');
+                if(typeof site_data.name !== 'undefined' && site_data.name !== ''){
+                  $("h1#site_title").html(site_data.name);    
+                }
+                if(typeof site_data.description !== 'undefined' && site_data.description !== ''){
+                  $("div#site_description").html(site_data.description);
+                }
+                if(typeof site_data.picture !== 'undefined' && site_data.picture !== ''){
+                  $("img#site_image").attr('src', serverSite+'uploads/images/' + site_data.picture);
+                }
+                if(typeof site_data.sound !== 'undefined' && site_data.sound !== ''){
+                  var site_sound =  '<audio id="site_sound" controls>' +
+                                      '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
+                                      '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +    
+                                    '</audio>';
+                  $("div#site_sound").html(site_sound);
+                }
+                
                 // insert stations data
                 if(stations.length !== 0){   
                   for(var i in stations){
@@ -276,6 +265,7 @@ function startScanning() {
             $("div#current_station").addClass('hide');
             $("button#go_to_stations").removeClass('hide');
             $("#loader_container").fadeOut("slow");
+            localStorage.site_start = Math.floor(Date.now() / 1000);
           });           
       }, 
       function (error) {

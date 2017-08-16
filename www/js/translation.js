@@ -37,5 +37,10 @@ var translation = {
 		"SELF_HELP"		: "مساعدة ذاتية",
 		"LOCAL_HELP"	: "مساعدة محلية",
 		"REMOTE_HELP"	: "مساعدة من بعيد",
+		"SITE_TIME"		: "لقد قمت بإنهاء الموقع خلال",
+		"MINUTES"		: "دقائق",
+		"AND"			: "و",
+		"SECONDS"		: "ثواني",
+		"FAQ_ERROR"		: "يجب الإجابة على جميع الأسئلة",
 	}
 };

@@ -128,4 +128,57 @@ $(document).ready(function(){
   var toggle_img = document.getElementById("toggle_img");
   sidebar.style.left = "-200px";
   toggle_img.style.left = "0px";
+
+  $("#logoutButton").click(function(){
+    swal({
+      title: "تحذير",
+      text: "لتسجيل الخروج يجب إدخال اسم المستخدم",
+      type: "input",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: "slide-from-top",
+      inputPlaceholder: "أدخل اسم المستخدم",
+      confirmButtonText: "تسجيل خروج",
+      cancelButtonText: "إلغاء",
+    },
+    function(inputValue){
+      if (inputValue === false) return false;
+      
+      if (inputValue === "") {
+        swal.showInputError("يجب أن تقوم بإدخال اسم المستخدم");
+        return false
+      }
+      var loggedin_username = localStorage.username;
+      if(loggedin_username == inputValue){
+        logoutAction();
+      }else{
+        swal.showInputError("اسم المستخدم غير متطابق");
+        return false
+      }
+      
+    });
+
+    // swal({
+    //   title: "تحذير",
+    //   text: "هل بالتأكيد تريد تسجيل الخروج؟",
+    //   type: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#DD6B55",
+    //   confirmButtonText: "نعم!",
+    //   cancelButtonText: "لا",
+    //   closeOnConfirm: false
+    // },
+    // function(){
+    //   logoutAction();
+    // });
+    
+  });
+
+  $("#selfHelp, #localHelp, #remoteHelp").click(function(){
+    swal({
+      title: 'قريبا! في النسخة القادمة',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
 })
