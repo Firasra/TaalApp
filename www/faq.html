@@ -28,35 +28,31 @@
             <div id="logoutButton"><span translate="LOGOUT"></span></div>
         </div>
 
-        <div id="fireworks"></div> 
-        <div class="outer">
-            <div class="middle">
-                <div id="page_content">
-                    <div id="faq_text_wrapper"> 
-                        <div translate="GOOD_WORK"></div>
-                        <div>   
-                            <span translate="SITE_TIME"></span>
-                            <span id="site_time_minutes"></span>
-                            <span translate="MINUTES"></span>
-                            <span translate="AND"></span>
-                            <span id="site_time_seconds"></span> 
-                            <span translate="SECONDS"></span>
-
-                        </div> 
-                        <div>
-                            <button class="btn btn-success" onclick="getFaq()" translate="GO_TO_FAQS" />
-                        </div> 
-                    </div>
-                    <div id="faq_wrapper">
-                        <form id="faq_form" action="" onsubmit="return faqAction($(this));" method="POST">
-                            <ul id="faq"></ul>
-                            <div id="faqError"></div>
-                            <button class="btn btn-success" translate="SUBMIT">
-                        </form>
-                    </div>
-                    
+        <div class="container">
+            <div id="faq_text_wrapper" class="container"> 
+                <div class="col-md-8">
+                    <div translate="GOOD_WORK"></div>
+                    <div>   
+                        <span translate="SITE_TIME"></span>
+                        <span id="site_time_minutes"></span>
+                        <span translate="MINUTES"></span>
+                        <span translate="AND"></span>
+                        <span id="site_time_seconds"></span> 
+                        <span translate="SECONDS"></span>
+                    </div> 
+                    <div>
+                        <button class="btn btn-warning get_faq_button" onclick="getFaq()" translate="GO_TO_FAQS" />
+                    </div> 
                 </div>
             </div>
+            <div id="faq_wrapper" class="form_wrapper col-md-8">
+                <form id="faq_form" action="" onsubmit="return faqAction($(this));" method="POST">
+                    <legend><h2>أجب عن الأسئلة التالية</h2></legend>
+                    <ul id="faq"></ul>
+                    <div id="faqError"></div>
+                    <button id="setFaq" class="btn btn-warning col-md-12" translate="SUBMIT">
+                </form>
+            </div>          
         </div>
     </body>
 </html>

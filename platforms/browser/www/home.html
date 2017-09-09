@@ -31,14 +31,81 @@
             <div id="logoutButton"><span translate="LOGOUT"></span></div>
         </div>
 
-        <div id="page_content" class="home">
+        <div class="site_container">
+            <div class="user_profile">
+                <div class="languages">
+                    <span>English</span> | 
+                    <span>العربية</span> | 
+                    <span>עברית</span>
+                </div>
+                <img class="user_profile_image" src="images/profile.png" />
+                <div class="user_profile_info">
+                    <h2>معلومات عني</h2>
+                    <span>اسمي بكشسيشسي</span>
+                </div>
+            </div>
+            
+            <button class="menu btn btn-warning" id="startScanning" translate="SCAN"></button>
+
+            <div class="site_data hidden">
+                <div class="col-md-4">
+                    <h1 id="site_title"></h1>
+                    <div id="site_description"></div>
+                    <div id="site_sound"></div>        
+                </div>
+                
+                <div id="site_img_wrapper" class="col-md-8">
+                    <img id="site_image" src="" />
+                </div>
+            </div>
+
+            <div class="site_current_station hidden">
+                <div class="col-md-4">
+                    <h1 id="station_title"></h1>
+                    <div id="station_description"></div>
+                    <div id="station_sound"></div>        
+                </div>
+                
+                <div id="station_img_wrapper" class="col-md-8">
+                    <img id="station_image" src="" />
+                </div>
+            </div>
+
+            <div class="site_stations hidden">
+                <div class="col-md-2">
+                    <h2>محطاتي</h2>
+                </div>
+
+                <div class="site_stations_wrapper col-md-8">
+
+                </div>
+
+                <div class="col-md-2">
+                    <img class="next_station" src="images/icons/animated-left-arrow.gif" />
+                </div>
+            </div>
+        </div>
+
+        <!-- <div id="page_content" class="home">
 
             <div id="current_station"></div>
             <div id="tasks_nav">
             </div>
+            <div class="user_data col-md-6">
+                <div class="languages">
+                    <span>English</span> | 
+                    <span>العربية</span> | 
+                    <span>עברית</span>
+                </div>
+                <img class="user_data_image" src="images/profile.png" />
+                <div class="user_data_info">
+                    <h2>معلومات عني</h2>
+                    <div>اسمي بكشسيشسي</span>
+                </div>
+            </div>
              
             <div id="site_wrapper">
-                <button class="menu btn btn-success" id="startScanning" translate="SCAN"></button>
+                <button class="menu btn btn-warning" id="startScanning" translate="SCAN"></button>
                 <h1 id="site_title"></h1>
                 <div id="site_data_wrapper">
                     <div id="site_description"></div>
@@ -51,7 +118,7 @@
                 
                 </br></br>
                 <!-- <button onclick="changeLanguage('he')" translate="HEBREW"></button>
-                <button onclick="changeLanguage('ar')" translate="ARABIC"></button> -->
+                <button onclick="changeLanguage('ar')" translate="ARABIC"></button> 
                 </br></br>
             </div>
 
@@ -61,7 +128,7 @@
 
             <div id="tasks_wrapper"></div>
             
-        </div>
+        </div> -->
 
     </body>
 </html>

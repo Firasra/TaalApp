@@ -12,85 +12,20 @@ $(document).ready(function(){
 
   goToStart();
 
-  $("#site_title").hide();
-  $("#site_data_wrapper").hide();
-  $("#startScanning").show();
+  $("div").on('click', ".station_slider.slick-active", function(){
+    goToSpecificStationTasks( $(this).attr('id') );
+  })
 
-  $("#go_to_stations").click(function(){
-    goToStations();
-  });
-
-  $("div#stations").on("click", "button#go_to_tasks", function(){
-    startTasks();
-  });
-
-  // On before slide change
-  $('#tasks_wrapper').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-    var tasks_number = $("#tasks_wrapper .task").length;
-    // when slider gets to the end
-    if( tasks_number-1 === nextSlide){
-      var next_station = $("div#stations").attr('next_station');
-      if( next_station < site_data.stations.length ){
-        $("button#next_station").removeClass('hide');
-      }else{
-        $("button#finish_site").removeClass('hide');
-      }
-      
-    }
-  });
-
-  $("div").on('click', "button#next_station", function(){
-    var next_station = $("div#stations").attr('next_station');
-    goToSpecificStationTasks( next_station );
-    activeSlick();
-    $("button#next_station").addClass('hide');
-  });
-
-  $("div").on('click', "button#finish_site",function(){
-    goToFaqs();
-  });
+  $("div").on('click', 'img.next_station', function(){
+    var next_station = parseInt($(".station_slider.selected").attr('id'));
+    goToSpecificStationTasks(next_station+1);
+  })
 
 });
 
-function activeSlick(){
-  /* $('#site_wrapper').slick({
-    rtl: false,
-    dots: true,
-    infinite: false,
-    speed: 300,
-    slidesToShow: 1,
-    arrows: true,
-    adaptiveHeight: true
-  });*/
-
-  $("#loader_container").show();
-
-  $('#tasks_wrapper').slick({
-    rtl: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    fade: false,
-    asNavFor: '#tasks_nav',
-    infinite: false
-  });
-
-  var tasks_number = $('#tasks_nav .task_nav').length;
-
-  $('#tasks_nav').slick({
-    rtl: true,
-    slidesToShow: tasks_number,
-    slidesToScroll: 1,
-    asNavFor: '#tasks_wrapper',
-    dots: true,
-    centerMode: false,
-    focusOnSelect: true,
-    infinite: false
-  });
-  
-  $("#loader_container").fadeOut("slow");
-  $("#myAudioElement0")[0].play();
-}   
+function activeSlick(selector, options){
+  $(selector).slick(options);
+}
 
 function loggedin(){
     
@@ -100,96 +35,39 @@ function notLoggedin(){
     logout();
 }
 
-function clearSiteData(){
-  $("div#stations").html('');
-  $("div#tasks_wrapper").html('');
-  $("div#tasks_nav").html('');
-
-  $("div#tasks_wrapper").attr('class', '');
-  $("div#tasks_nav").attr('class', '');
-}
-
 function goToStart(){
   $("#loader_container").show();
-  $("button#go_to_stations").addClass('hide');
-  $("div#stations_wrapper").hide();
-  $("div#tasks_wrapper").hide();
-  $("div#tasks_nav").hide();
-  $("button#next_station").addClass('hide');
-  $("button#finish_site").addClass('hide');
-  $("#loader_container").fadeOut("slow");
-}
-
-function goToStations(){
-  $("#loader_container").show();
-  $("#site_wrapper").hide();
-  $("div#stations_wrapper").show();
-  $("#loader_container").fadeOut("slow");
-}
-
-function startTasks(){
-  $("#loader_container").show();
-  $("div#stations_wrapper").hide();
-  $("div#tasks_wrapper").show();
-  $("div#tasks_nav").show();
-  $("div#current_station").removeClass('hide'); 
-  activeSlick();
+  $("button#startScanning").removeClass("hidden");
+  $("div.site_data, div.site_current_station, div.site_stations").addClass("hidden");
   $("#loader_container").fadeOut("slow");
 }
 
 function goToSpecificStationTasks(station_number){
-  $("#loader_container").show();
-  $("div#tasks_wrapper").html('');
-  $("div#tasks_nav").html('');
+  if( station_number == -1 || $(".station_slider.selected").attr('id') == station_number || site_data.stations.length <= station_number )
+    return;
+  
+  $("div.site_data").addClass('hidden');
+  $("div.site_current_station").removeClass('hidden');
   var station = site_data.stations[station_number];
-  $("div#current_station").empty();
-  $("div#current_station").append('<h2>' + station.name +'</h2>');
-  $("div#current_station").removeClass('hide');
-  for(var j in station.tasks){
-    var task = station.tasks[j];
-    var task_nav_html = '<div class="task_nav">' + task.name + '</div>';
-    var task_html = '<div class="task">';
 
-    if(typeof task.name !== 'undefined' && task.name !== ''){
-      task_html += '<div>' + task.name + '</div>';
-    }
+  $("div.site_current_station #station_title").html(station.name);
+  $("div.site_current_station #station_description").html(station.description);
 
-    if(typeof task.picture !== 'undefined' && task.picture !== ''){
-      task_html += '<img src="' + serverSite + 'uploads/images/' + task.picture + '" class="task_img" />';
-    }
-
-    if(typeof task.description !== 'undefined' && task.description !== ''){
-      task_html += '<div class="task_description" >' + task.description + '</div>';
-    }
-    
-    if(typeof task.sound !== 'undefined' && task.sound !== ''){
-      task_html +=  '<audio id="myAudioElement' + j + '" controls>' +
-                      '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
-                      '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +    
-                    '</audio>';
-    }
-    
-    task_html += '</div>';
-
-    $("div#tasks_wrapper").append(task_html);
-    $("div#tasks_nav").append(task_nav_html);
+  $("img#station_image").attr('src', serverSite+'uploads/images/' + station.picture);
+  
+  if(typeof station.sound !== 'undefined' && station.sound !== ''){
+    var site_sound =  '<audio id="site_sound" controls>' +
+                        '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/ogg">' +
+                        '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/mpeg">' +    
+                      '</audio>';
+    $("div#station_sound").html(site_sound);
   }
-    
-  $("div#stations").attr('next_station', Number(station_number)+1);
-  $("div#tasks_wrapper").attr('class', '');
-  $("div#tasks_nav").attr('class', '');
 
-  var task_html = '<div class="task">';
-  var next_station = $("div#stations").attr('next_station');
-  if( next_station < site_data.stations.length ){
-    task_html += '<button id="next_station" class="btn btn-success" translate="NEXT_STATION">' + translation[choosedLanguage]['NEXT_STATION'] + '</button>';
-  }else{
-    task_html += '<button id="finish_site" class="btn btn-success" translate="FINISH">' + translation[choosedLanguage]['FINISH'] + '</button>'
-  }
-  task_html += '</div>';
-  $("div#tasks_wrapper").append(task_html);
+  $(".station_slider").each(function(){
+    $(this).removeClass('selected');
+  })
 
-  $("#loader_container").fadeOut("slow");
+  $('.station_slider#'+station_number).addClass('selected');
 }
 
 function goToFaqs(){
@@ -200,7 +78,6 @@ function startScanning() {
     $('button#startScanning').click( function() {
     
       $("#loader_container").show();
-      clearSiteData();
       cordova.plugins.barcodeScanner.scan(
       function (result) {
         // alert("We got a barcode\n" +
@@ -223,9 +100,6 @@ function startScanning() {
                 site_data = response.data.site;
                 localStorage.site_id = site_data.id;
                 var stations = site_data.stations;
-                $("#site_title").show();
-                $("#site_data_wrapper").show();   
-                $("#startScanning").hide();
                 
                  // insert site data
                 if(typeof site_data.name !== 'undefined' && site_data.name !== ''){
@@ -247,25 +121,32 @@ function startScanning() {
                 
                 // insert stations data
                 if(stations.length !== 0){   
+                  $("div.site_container div.site_stations_wrapper").empty();             
                   for(var i in stations){
                     var station = stations[i];
-                    var id = i == 0 ? 'id="go_to_tasks"' : '';
-                    var buttonClass = i == 0 ? 'btn-success' : 'btn-default';
-                    $("div#stations").append('<button type="button" ' + id + ' class="btn ' + buttonClass + ' station">'+station.name+'</button>');
-                    if( i < stations.length -1){
-                      $("div#stations").append('<div class="vertical_line"></div>');
-                    }
-                    // insert tasks data of first station            
-                    $("div#stations").attr('next_station', 1);
+                    var station_el = '<div id="'+ i +'" class="station_slider" ><img src="' + serverSite + 'uploads/images/' + station.picture + '" /></div>';
+                    $("div.site_container div.site_stations_wrapper").append(station_el);             
                   }
-                  goToSpecificStationTasks(0);
+                  goToSpecificStationTasks(-1);
                 }
                 
             }
-            $("div#current_station").addClass('hide');
-            $("button#go_to_stations").removeClass('hide');
-            $("#loader_container").fadeOut("slow");
+
             localStorage.site_start = Math.floor(Date.now() / 1000);
+
+            var selector = "div.site_container div.site_stations_wrapper";
+            var options = {
+              rtl: true,
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              arrows: false,
+              fade: false,
+              infinite: false
+            }
+            $("button#startScanning").addClass("hidden");
+            $("div.site_data, div.site_stations").removeClass("hidden");
+            $("#loader_container").fadeOut("slow");
+            activeSlick(selector, options)
           });           
       }, 
       function (error) {

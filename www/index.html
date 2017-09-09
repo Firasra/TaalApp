@@ -16,32 +16,29 @@
 		<script type="text/javascript" src="cordova.js"></script>
 		<div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
 
-		<div class="outer">
-			<div class="middle">
-				<div id="page_content">
-					<form id="loginForm" action="" onsubmit="return loginAction($(this));" method="POST">
-						<legend><h2>تسجيل دخول</h2></legend>
-						<ul>
-							<li>
-								<label for="username" translate="USERNAME"></label>
-								<input type="text" name="username"><br>
-							</li>
+		<div class="container">
+			<div class="form_wrapper col-md-8">
+				<form id="loginForm" action="" onsubmit="return loginAction($(this));" method="POST">
+					<legend><h2>تسجيل دخول</h2></legend>
+					<ul>
+						<li>
+							<label for="username" translate="USERNAME" class="col-md-3"></label>
+							<input type="text" name="username" class="col-md-9"><br>
+						</li>
 
-							<li>
-								<label for="password" translate="PASSWORD"></label>
-								<input type="password" name="password"><br>
-							</li>
-
-							<li>
-								<label></label>
-								<button id="login_button" class="btn btn-success" translate="LOGIN"><br>
-							</li>
-
-						</ul>
+						<li>
+							<label for="password" translate="PASSWORD" class="col-md-3"></label>
+							<input type="password" name="password" class="col-md-9"><br>
+						</li>
 						<div id="loginError"></div>
-					</form>
+						<li>
+							<label></label>
+							<button id="login_button" class="btn btn-success col-md-12" translate="LOGIN"><br>
+						</li>
+
+					</ul>
 					
-				</div>
+				</form>	
 			</div>
 		</div>
 		</br></br>

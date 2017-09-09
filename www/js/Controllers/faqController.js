@@ -9,10 +9,6 @@ $(document).ready(function(){
   $("#site_time_minutes").html(minutes);
   $("#site_time_seconds").html(seconds);
   $("#faq_wrapper").hide();
-
-  setTimeout(function() {
-    $("#fireworks").fireworks();
-  });
   
 });
 
@@ -74,31 +70,31 @@ function getFaq(){
           var faqs = site.faq;
           for(var i in faqs){
             var element = '';
-            var koko = '{"koko": "aaa", "bobo": "bbb"}';
+            // var koko = '{"koko": "aaa", "bobo": "bbb"}';
             switch(faqs[i].type) {
               case 'text':
-                element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>' +
-                          '<input type="text" name="' + faqs[i].site_faq_id + '"/> </li>';
+                element = '<li><label for="'+ faqs[i].site_faq_id +'" class="col-md-3">' + faqs[i].text + '</label>' +
+                          '<input type="text" name="' + faqs[i].site_faq_id + '" class="col-md-9" /> </li>';
                 break;
               
               case 'textarea':
-                element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>' +
-                          '<textarea name="' + faqs[i].site_faq_id +'" rows="4" /> </li>';
+                element = '<li><label for="'+ faqs[i].site_faq_id +'" class="col-md-3">' + faqs[i].text + '</label>' +
+                          '<textarea name="' + faqs[i].site_faq_id +'" rows="4" class="col-md-9" /> </li>';
                 break;
 
               case 'radio':
-                element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>';
+                element = '<li><label for="'+ faqs[i].site_faq_id +'" class="col-md-3">' + faqs[i].text + '</label>';
                 var attrs = JSON.parse(faqs[i].attr);
                 for(var j in attrs){
-                  element += '<div class="question_wrapper" ><input type="radio" id="question_' + faqs[i].site_faq_id + '_' + j + '" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> <label for="question_' + faqs[i].site_faq_id + '_' + j + '"><span><span></span></span>' + attrs[j] + '</label></div>';
+                  element += '<div class="question_wrapper" class="col-md-9" ><input type="radio" id="question_' + faqs[i].site_faq_id + '_' + j + '" name="' + faqs[i].site_faq_id + '" value="' + attrs[j] + '" /> <label for="question_' + faqs[i].site_faq_id + '_' + j + '"><span><span></span></span>' + attrs[j] + '</label></div>';
                 }
                 element += '</li>';
                 break;
 
               case 'select':
-                element = '<li><label for="'+ faqs[i].site_faq_id +'">' + faqs[i].text + '</label>';
+                element = '<li><label for="'+ faqs[i].site_faq_id +'" class="col-md-3">' + faqs[i].text + '</label>';
                 var attrs = JSON.parse(faqs[i].attr);
-                element += '<div class="question_wrapper" > <select name="' + faqs[i].site_faq_id + '">';
+                element += '<div class="question_wrapper" class="col-md-9" > <select name="' + faqs[i].site_faq_id + '">';
                 for(var j in attrs){
                   element += '<option id="question_' + faqs[i].site_faq_id + '_' + j + '" value="' + attrs[j] + '" >' + attrs[j] + '</option>';
                 }
@@ -120,6 +116,5 @@ function getFaq(){
         
     $("#loader_container").fadeOut("slow");
     $("#faq_wrapper").show();
-    $("#fireworks").hide();
   });
 }

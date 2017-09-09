@@ -1,117 +1,45 @@
-html, body /*, div#page_content*/ {
+html, body {
     margin: 0;
 	height: 100%;
 	width: 100%;
 	font-family: Calibri;
-	color: #565656;
+	color: #fff;
 	font-size: 16px !important;
 }
 
 body{
 	direction: rtl;
-	background: #5ab7e5;
-}
-
-div.menu{
-	width: 49%;
-	margin-bottom: 5%;
-	display: inline-block;
-	cursor: pointer;
-}
-
-.red{
-	background-color: red;
-}
-
-.green{
-	background-color: green;
-}
-
-.blue{
-	background-color: blue;
-}
-
-.yellow{
-	background-color: yellow;
-}
-
-#tasks_wrapper{
-	direction: ltr !important;
-}
-
-.task{
-	background: white;
-	color: #5cb85c;
-	font-size: 36px;
-	line-height: 100px;
-	margin: 10px;
-	padding: 2%;
-	position: relative;
-	text-align: center;
-	border-radius: 20px;
-}
-
-.task_nav{
-	background: white;
-	color: #3498db;
-	font-size: 16px;
-	margin: 10px; 
-	padding: 1%;
-	text-align: center;
-	border-radius: 20px;
+	background: #000000;
 }
 
 .hide{
 	display: none;
 }
-/*
-div#page_content{
-	display: table;
+
+[class*='col-md-']{
+	float: right;
 }
 
-form#loginForm{
-	margin: auto;
-	width: 50%;
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-}
-*/
-.outer {
-    display: table;
-    position: absolute;
+.container {
     height: 100%;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.middle {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-div#page_content{
-    margin-left: auto;
-    margin-right: auto; 
-	width: 45%;
-	
-}
-
-div#page_content.home{
-	margin-left: auto;
-    margin-right: auto; 
-	width: 100%;
-}
-
-form{
+/***
+Start of forms CSS
+***/
+.form_wrapper{
 	padding: 10px;
-	background: white;
+	background: #404040;
 	border-radius: 20px;
 }
 
 form legend{
-	width: 100%;
 	text-align: center;
-	border-bottom: 1px solid #e5e5e5;
+	color: #ffd966;
+	border-bottom: 1px solid #000;
 }
 
 form ul{
@@ -119,13 +47,12 @@ form ul{
 }
 
 form ul li{
-	margin-bottom: 10px;
+	height: 50px;;
+	margin-bottom: 20px;
 }
 
 form ul li label{
-	display: inline-block;
-	width: 20%;
-	vertical-align: middle;
+	line-height: 3;
 }
 
 form input[type="text"], form textarea, input[type="password"] {
@@ -137,14 +64,14 @@ form input[type="text"], form textarea, input[type="password"] {
 	font-size: 16px;
 	height: 50px;
 	outline: none;
-	width: 70%;
   -webkit-appearance:none;
 }
 
-form #login_button {
-	height: 50px;
-	width: 70%;
+form #login_button, form #setFaq {
+	height: 70px;
 	font-size: 20px;
+	background: #000;
+	border-color: #000;
 }
 
 li {list-style-type: none;}
@@ -154,7 +81,13 @@ div#loginError, div#faqError{
 	text-align: center;
 	font-weight: bold;
 }
+/***
+End of forms CSS
+***/
 
+/***
+Start of sidebar and loader
+***/
 img#toggle_img{
 	position: fixed;
 	left: 10px; 
@@ -214,38 +147,112 @@ div#sidebar div span {
   line-height: normal;
   color: #449d44;
 }
+/***
+End of sidebar and loader
+***/
 
-img#site_image{
+/***
+Start of Faq CSS
+***/
+#faq_text_wrapper{
+	background-color: #404040;
+    height: 400px;
+    border-radius: 20px;
+	padding: 3%;
+	text-align: center;
+}
+
+button.get_faq_button{
+	color: #000;
+	font-size: 20px;
+}
+/***
+End of Faq CSS
+***/
+
+/***
+Start of Site CSS
+***/
+
+div.site_container{
 	height: 100%;
-	width: 100%;
 }
 
-div#stations button.station{
-    display: block;
-    width: 80%;
-	padding: 2%;
+div.site_container button#startScanning{
 	margin: auto;
-    margin-bottom: 2%;
-	margin-top: 2%;
-	border-radius: 20px;
+    display: block;
+    width: 30%;
+    line-height: 6;
+	font-size: 40px;
+	margin-top: 13%;
 }
 
-div.vertical_line{
-	display: block;
-    height: 100px;
-    border-left: 5px dashed #fff;
-    width: 50%;
+div.user_profile{
+	height: 20%;
 }
 
-div#current_station h2{
-	position: relative; 
-    top: -20px; 
-    text-align: center;
-    background-color: #f9f9f9;
-    padding: 2%;
-    color: #565656;
+div.user_profile div.languages{
+	float: left;
+	margin-left: 7%;
+	margin-top: 1%;
 }
 
+div.user_profile img.user_profile_image{
+	display: inline-block;
+	max-width: 100%;
+    max-height: 100%;
+}
+
+div.user_profile div.user_profile_info{
+	display: inline-block;
+}
+
+div.site_data,
+div.site_current_station{
+	height: 60%;
+	background-color: #404040;
+}
+
+div.site_data div#site_img_wrapper img#site_image,
+div.site_current_station div#station_img_wrapper img#station_image{
+	display: inline-block;
+	max-width: 100%;
+    max-height: 100%;
+}
+
+div.site_stations{
+	height: 20%;
+	background-color: #c55a11;
+}
+
+div.site_stations div.station_slider{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+} 
+
+div.site_stations img{
+	width: 150px;
+	height: 150px;
+}
+
+div.site_stations div.station_slider.slick-active.selected img{
+	opacity: 1;
+	animation: 1s all;
+}
+
+div.site_stations div.station_slider img{
+	opacity: 0.5;
+	animation: 1s all;
+}
+
+/***
+End of Site CSS
+***/
+
+/***
+Start of Slick CSS
+***/
 .slick-track{
 	float: right;
 }
@@ -254,180 +261,6 @@ div#current_station h2{
 	padding: 2%;
 	float: right;
 }
-
-.tasks_wrapper .slick-slide{
-	padding: 0% 2% 2% 2%;
-}
-
-.task_img{
-	width: 50%;
-	display: inline-block;
-	float: left;
-}
-
-.task_description{
-	width: 40%;
-	display: inline-block;
-	float: right;
-	color: #565656;
-    font-size: 16px;
-}
-
-#site_title{
-	text-align: center;
-    background: white;
-    padding: 1%;
-    width: 100%;
-    margin: auto;
-    margin-bottom: 5%;
-}
-
-#site_description{
-	display: inline-block;
-	width: 40%;
-	vertical-align: top;
-}
-
-#site_img_wrapper{
-	display: inline-block;
-	width: 59%;
-}
-
-#site_data_wrapper{
-	width: 80%;
-	padding: 1%;
-	margin: auto;
-	margin-bottom: 5%;
-	border-radius: 20px;
-	background-color: white;
-}
-
-#startScanning{
-	margin: auto;
-    display: block;
-    width: 30%;
-    line-height: 6;
-	font-size: 40px;
-	margin-top: 19%;
-}
-
-#go_to_stations{
-	display: block;
-	margin: auto;
-	margin-top: 2%;
-}
-
-#tasks_nav .slick-current{
-	background-color: #5cb85c;
-	color: white;
-}
-/* 
-#site_wrapper{
-	margin-top: 10%;
-} */
-
-#faq_text_wrapper{
-	background-color: white;
-    height: 400px;
-    border-radius: 20px;
-	padding: 3%;
-}
-
-input[type=checkbox]:not(old),
-input[type=radio   ]:not(old){
-  width     : 2em;
-  margin    : 0;
-  padding   : 0;
-  /* font-size : 1em; */
-  opacity   : 0;
-}
-
-input[type=checkbox]:not(old) + label,
-input[type=radio   ]:not(old) + label{
-  display      : inline-block;
-  margin-left  : -2em;
-  line-height  : 1.5em;
-}
-
-input[type=checkbox]:not(old) + label > span,
-input[type=radio   ]:not(old) + label > span{
-  display          : inline-block;
-  width            : 0.875em;
-  height           : 0.875em;
-  margin           : 0.25em 0.5em 0.25em 0.25em;
-  border           : 0.0625em solid rgb(192,192,192);
-  border-radius    : 0.25em;
-  background       : rgb(224,224,224);
-  background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-  background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-  background-image :      -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-  background-image : -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
-  background-image :         linear-gradient(rgb(240,240,240),rgb(224,224,224));
-  vertical-align   : bottom;
-}
-
-input[type=checkbox]:not(old):checked + label > span,
-input[type=radio   ]:not(old):checked + label > span{
-  background-image :    -moz-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-  background-image :     -ms-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-  background-image :      -o-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-  background-image : -webkit-linear-gradient(rgb(224,224,224),rgb(240,240,240));
-  background-image :         linear-gradient(rgb(224,224,224),rgb(240,240,240));
-}
-
-input[type=checkbox]:not(old):checked + label > span:before{
-  content     : '✓';
-  display     : block;
-  width       : 1em;
-  color       : rgb(153,204,102);
-  /* font-size   : 0.875em; */
-  line-height : 1em;
-  text-align  : center;
-  text-shadow : 0 0 0.0714em rgb(115,153,77);
-  font-weight : bold;
-}
-
-input[type=radio]:not(old):checked + label > span > span{
-  display          : block;
-  width            : 0.5em;
-  height           : 0.5em;
-  margin           : 0.125em;
-  border           : 0.0625em solid rgb(115,153,77);
-  border-radius    : 0.125em;
-  background       : rgb(153,204,102);
-  background-image :    -moz-linear-gradient(rgb(179,217,140),rgb(153,204,102));
-  background-image :     -ms-linear-gradient(rgb(179,217,140),rgb(153,204,102));
-  background-image :      -o-linear-gradient(rgb(179,217,140),rgb(153,204,102));
-  background-image : -webkit-linear-gradient(rgb(179,217,140),rgb(153,204,102));
-  background-image :         linear-gradient(rgb(179,217,140),rgb(153,204,102));
-}
-
-.question_wrapper{
-	display: inline-block;
-	margin-left: 10px;
-}
-
-#next_station, #finish_site{
-	font-size: 40px;
-    width: 50%;
-	line-height: 5;
-	border-radius: 20px;
-}
-
-#faq_text_wrapper button.btn , #faq_form button.btn{
-	margin-right: 38%;
-	width: 25%;
-	padding: 2%;
-	font-size: 16px;
-}
-
-#faq_text_wrapper button.btn{
-	margin-top: 3%;
-}
-
-#fireworks {
-	display: block;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
+/***
+End of Slick CSS
+***/
