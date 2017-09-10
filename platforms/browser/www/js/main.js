@@ -7,6 +7,7 @@ function getFormParams(form){
 }
 
 function loginAction(form){
+  $("#loader_container").show();
   var form_data = getFormParams(form);
   if ( typeof form_data.username !== 'undefined' && typeof form_data.password !== 'undefined' ) {
     $.ajax({
@@ -26,8 +27,8 @@ function loginAction(form){
           loadPage('home.html');
         } 
       }
-
-      $("#loginexample").html('user not exist');
+      $("#loader_container").hide();
+      $("#loginError").html(translation[choosedLanguage]['LOGIN_ERROR']);
 
     }); 
   } 
@@ -54,6 +55,7 @@ function logoutAction(){
 }
 
 function isLoggedin(){
+  $("#loader_container").show();
   var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
   var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
   $.ajax({
@@ -73,9 +75,10 @@ function isLoggedin(){
 }
 
 function logout(){
+  $("#loader_container").show();
   localStorage.removeItem('auth_token');
   localStorage.removeItem('username');
-  loadPage('login.html');   
+  loadPage('index.html');   
 }
 
 // load html template content
@@ -102,3 +105,80 @@ function changeLanguage(language){
     
   })
 }
+
+function toggle_sidebar(){
+  var sidebar    = document.getElementById("sidebar");
+  var toggle_img = document.getElementById("toggle_img");
+  $("#toggle_img").toggleClass('flipped');
+
+  if(sidebar.style.left == "-200px")
+  {
+      sidebar.style.left = "0px";
+      toggle_img.style.left = "200px";
+  }
+  else
+  {
+      sidebar.style.left = "-200px";
+      toggle_img.style.left = "0px";
+  }
+}
+
+$(document).ready(function(){
+  var sidebar    = document.getElementById("sidebar");
+  var toggle_img = document.getElementById("toggle_img");
+  sidebar.style.left = "-200px";
+  toggle_img.style.left = "0px";
+
+  $("#logoutButton").click(function(){
+    swal({
+      title: "تحذير",
+      text: "لتسجيل الخروج يجب إدخال اسم المستخدم",
+      type: "input",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      animation: "slide-from-top",
+      inputPlaceholder: "أدخل اسم المستخدم",
+      confirmButtonText: "تسجيل خروج",
+      cancelButtonText: "إلغاء",
+    },
+    function(inputValue){
+      if (inputValue === false) return false;
+      
+      if (inputValue === "") {
+        swal.showInputError("يجب أن تقوم بإدخال اسم المستخدم");
+        return false
+      }
+      var loggedin_username = localStorage.username;
+      if(loggedin_username == inputValue){
+        logoutAction();
+      }else{
+        swal.showInputError("اسم المستخدم غير متطابق");
+        return false
+      }
+      
+    });
+
+    // swal({
+    //   title: "تحذير",
+    //   text: "هل بالتأكيد تريد تسجيل الخروج؟",
+    //   type: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#DD6B55",
+    //   confirmButtonText: "نعم!",
+    //   cancelButtonText: "لا",
+    //   closeOnConfirm: false
+    // },
+    // function(){
+    //   logoutAction();
+    // });
+    
+  });
+
+  $("#selfHelp, #localHelp, #remoteHelp").click(function(){
+    swal({
+      title: 'قريبا! في النسخة القادمة',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+})

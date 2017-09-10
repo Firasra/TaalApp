@@ -24,5 +24,23 @@ var translation = {
 		"PASSWORD"		: "كلمة السر",
 		"LOGIN"   		: "تسجيل دخول",
 		"PLACE_QRCODE"	: "ضع الرمز بوسط الشاشة",
+
+		"START"			: "إبدأ",
+		"GO_TO_STATIONS" : "المحطات",
+		"NEXT_STATION"  : "إلى المحطة التالية",
+		"FINISH"		: "إنتهيت",
+		"GOOD_WORK"		: "ممتاز ",
+		"SUBMIT"		: "تثبيت",
+		"GO_TO_FAQS"	: "قم بتقييمي",
+		"LOGIN_ERROR"	: "معلومات المستخدم غير صحيحة",
+		"LOGOUT"		: "تسجيل خروج",
+		"SELF_HELP"		: "مساعدة ذاتية",
+		"LOCAL_HELP"	: "مساعدة محلية",
+		"REMOTE_HELP"	: "مساعدة من بعيد",
+		"SITE_TIME"		: "لقد قمت بإنهاء الموقع خلال",
+		"MINUTES"		: "دقائق",
+		"AND"			: "و",
+		"SECONDS"		: "ثواني",
+		"FAQ_ERROR"		: "يجب الإجابة على جميع الأسئلة",
 	}
 };

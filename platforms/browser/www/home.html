@@ -4,37 +4,131 @@
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <script src="js/jquery.min.js" ></script>
+        <script type="text/javascript" src="js/lib/slick.min.js"></script>
+        <script type="text/javascript" src="js/lib/sweetalert.min.js"></script>
+        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
         <script src="js/config.js" ></script>
 		<script src="js/translation.js" ></script>
 		<script src="js/main.js" ></script>
         <script src="js/Controllers/homeController.js" ></script>
+        <link rel="stylesheet" type="text/css" href="css/lib/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="css/lib/slick-theme.css"/>
+        <link rel="stylesheet" type="text/css" href="css/lib/sweetalert.css"/>
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <title translate="APP_NAME"></title>
     </head>
     <body>
+
         <script type="text/javascript" src="cordova.js"></script>
 
-        <div id="page_content">
-            <div class="menu red" translate="SETTINGS"></div>
-            <div class="menu green" translate="LEARN"></div>
-            <button class="menu blue" id="startScanning" translate="SCAN"></button>
-            <div class="menu yellow" translate="FEEDBACK"></div>
-            <button translate="FEEDBACK"></button>
-
-            <select>
-                <option value="1" translate="APP_NAME"></option>
-                <option value="2" translate="APP_NAME"></option>
-                <option value="3" translate="APP_NAME"></option>
-            </select>
-
-            <br><br>
-
-            <div id="site_wrapper"></div> </br></br>
-
-            <button onclick="logoutAction()">logout</button>
+        <div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
+        <img id="toggle_img" class="toggle" src="images/icons/menu.png" onclick="toggle_sidebar()" />
+        <div id="sidebar">
+            <div id="selfHelp"><span translate="SELF_HELP"></span></div>
+            <div id="localHelp"><span translate="LOCAL_HELP"></span></div>
+            <div id="remoteHelp"><span translate="REMOTE_HELP"></span></div>
+            <div id="logoutButton"><span translate="LOGOUT"></span></div>
         </div>
 
-		<button onclick="changeLanguage('he')" translate="HEBREW"></button>
-		<button onclick="changeLanguage('ar')" translate="ARABIC"></button>
+        <div class="site_container">
+            <div class="user_profile">
+                <div class="languages">
+                    <span>English</span> | 
+                    <span>العربية</span> | 
+                    <span>עברית</span>
+                </div>
+                <img class="user_profile_image" src="images/profile.png" />
+                <div class="user_profile_info">
+                    <h2>معلومات عني</h2>
+                    <span>اسمي بكشسيشسي</span>
+                </div>
+            </div>
+            
+            <button class="menu btn btn-warning" id="startScanning" translate="SCAN"></button>
+
+            <div class="site_data hidden">
+                <div class="col-md-4">
+                    <h1 id="site_title"></h1>
+                    <div id="site_description"></div>
+                    <div id="site_sound"></div>        
+                </div>
+                
+                <div id="site_img_wrapper" class="col-md-8">
+                    <img id="site_image" src="" />
+                </div>
+            </div>
+
+            <div class="site_current_station hidden">
+                <div class="col-md-4">
+                    <h1 id="station_title"></h1>
+                    <div id="station_description"></div>
+                    <div id="station_sound"></div>        
+                </div>
+                
+                <div id="station_img_wrapper" class="col-md-8">
+                    <img id="station_image" src="" />
+                </div>
+            </div>
+
+            <div class="site_stations hidden">
+                <div class="col-md-2">
+                    <h2>محطاتي</h2>
+                </div>
+
+                <div class="site_stations_wrapper col-md-8">
+
+                </div>
+
+                <div class="col-md-2">
+                    <img class="next_station" src="images/icons/animated-left-arrow.gif" />
+                </div>
+            </div>
+        </div>
+
+        <!-- <div id="page_content" class="home">
+
+            <div id="current_station"></div>
+            <div id="tasks_nav">
+            </div>
+            <div class="user_data col-md-6">
+                <div class="languages">
+                    <span>English</span> | 
+                    <span>العربية</span> | 
+                    <span>עברית</span>
+                </div>
+                <img class="user_data_image" src="images/profile.png" />
+                <div class="user_data_info">
+                    <h2>معلومات عني</h2>
+                    <div>اسمي بكشسيشسي</span>
+                </div>
+            </div>
+             
+            <div id="site_wrapper">
+                <button class="menu btn btn-warning" id="startScanning" translate="SCAN"></button>
+                <h1 id="site_title"></h1>
+                <div id="site_data_wrapper">
+                    <div id="site_description"></div>
+                    <div id="site_img_wrapper"><img id="site_image" src="" /></div>
+                    <div id="site_sound"></div>
+                    <div id="go_to_stations_wrapper">
+                        <button id="go_to_stations" type="button" class="btn btn-success" translate="GO_TO_STATIONS"></button>
+                    </div>
+                </div>
+                
+                </br></br>
+                <!-- <button onclick="changeLanguage('he')" translate="HEBREW"></button>
+                <button onclick="changeLanguage('ar')" translate="ARABIC"></button> 
+                </br></br>
+            </div>
+
+            <div id="stations_wrapper">
+                <div id="stations"></div>                
+            </div>
+
+            <div id="tasks_wrapper"></div>
+            
+        </div> -->
+
     </body>
 </html>

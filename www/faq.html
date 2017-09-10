@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <script src="js/jquery.min.js" ></script>
+        <script type="text/javascript" src="js/lib/sweetalert.min.js"></script>
+		<script src="js/lib/jquery.fireworks.js" ></script>
+        <script src="js/config.js" ></script>
+		<script src="js/translation.js" ></script>
+		<script src="js/main.js" ></script>
+        <script src="js/Controllers/faqController.js" ></script>
+        <link rel="stylesheet" type="text/css" href="css/lib/sweetalert.css"/>
+        <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/lib/jquerycss.css"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title translate="APP_NAME"></title>
+    </head>
+    <body> 
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <div id="loader_container"><img id="loader" src="images/icons/loader.gif" /></div>
+        <img id="toggle_img" class="toggle" src="images/icons/menu.png" onclick="toggle_sidebar()" />
+        <div id="sidebar">
+            <div id="selfHelp"><span translate="SELF_HELP"></span></div>
+            <div id="localHelp"><span translate="LOCAL_HELP"></span></div>
+            <div id="remoteHelp"><span translate="REMOTE_HELP"></span></div>
+            <div id="logoutButton"><span translate="LOGOUT"></span></div>
+        </div>
+
+        <div class="container">
+            <div id="faq_text_wrapper" class="container"> 
+                <div class="col-md-8">
+                    <div translate="GOOD_WORK"></div>
+                    <div>   
+                        <span translate="SITE_TIME"></span>
+                        <span id="site_time_minutes"></span>
+                        <span translate="MINUTES"></span>
+                        <span translate="AND"></span>
+                        <span id="site_time_seconds"></span> 
+                        <span translate="SECONDS"></span>
+                    </div> 
+                    <div>
+                        <button class="btn btn-warning get_faq_button" onclick="getFaq()" translate="GO_TO_FAQS" />
+                    </div> 
+                </div>
+            </div>
+            <div id="faq_wrapper" class="form_wrapper col-md-8">
+                <form id="faq_form" action="" onsubmit="return faqAction($(this));" method="POST">
+                    <legend><h2>أجب عن الأسئلة التالية</h2></legend>
+                    <ul id="faq"></ul>
+                    <div id="faqError"></div>
+                    <button id="setFaq" class="btn btn-warning col-md-12" translate="SUBMIT">
+                </form>
+            </div>          
+        </div>
+    </body>
+</html>
