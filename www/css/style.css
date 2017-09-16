@@ -188,29 +188,48 @@ div.site_container button#startScanning{
 }
 
 div.user_profile{
-	height: 20%;
+	height: 15%;
 	background-color: #404040;
 }
 
-div.user_profile div.languages{
+div.user_profile div[class*='col-md-']{
+	padding: 0;
+}
+
+div.user_profile div.helpIcons{
+	height: 100%;
+}
+
+#danger, #help{
 	float: left;
-	margin-left: 7%;
-	margin-top: 1%;
+}
+
+#danger{
+	height: 95%;
+}
+
+#help{
+	height: 100%;
 }
 
 div.user_profile img.user_profile_image{
 	display: inline-block;
 	max-width: 100%;
-    max-height: 100%;
+	max-height: 100%;
 }
 
 div.user_profile div.user_profile_info{
+	display: inline-block;
+	height: 100%;
+}
+
+div.user_profile div.user_profile_info h2{
 	display: inline-block;
 }
 
 div.site_data,
 div.site_current_station{
-	height: 60%;
+	margin-top: 10%;
 }
 
 div.site_data div#site_img_wrapper img#site_image,

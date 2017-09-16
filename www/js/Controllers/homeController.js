@@ -7,19 +7,13 @@ $(document).ready(function(){
   changeLanguage();
   startScanning();
   //$('button#startScanning').click();
-
   localStorage.removeItem('site_start');
-
   goToStart();
 
-  $("div").on('click', ".station_slider.slick-active", function(){
-    goToSpecificStationTasks( $(this).attr('id') );
-  })
-
-  $("div").on('click', 'img.next_station', function(){
-    var next_station = parseInt($(".station_slider.selected").attr('id'));
-    goToSpecificStationTasks(next_station+1);
-  })
+  // On before slide change
+  $('div.site_data .slick-slide').on('dragstart', function(event){
+    alert('111');
+  });
 
 });
 
@@ -42,33 +36,33 @@ function goToStart(){
   $("#loader_container").fadeOut("slow");
 }
 
-function goToSpecificStationTasks(station_number){
-  if( station_number == -1 || $(".station_slider.selected").attr('id') == station_number || site_data.stations.length <= station_number )
-    return;
+// function goToSpecificStationTasks(station_number){
+//   if( station_number == -1 || $(".station_slider.selected").attr('id') == station_number || site_data.stations.length <= station_number )
+//     return;
   
-  $("div.site_data").addClass('hidden');
-  $("div.site_current_station").removeClass('hidden');
-  var station = site_data.stations[station_number];
+//   $("div.site_data").addClass('hidden');
+//   $("div.site_current_station").removeClass('hidden');
+//   var station = site_data.stations[station_number];
 
-  $("div.site_current_station #station_title").html(station.name);
-  $("div.site_current_station #station_description").html(station.description);
+//   $("div.site_current_station #station_title").html(station.name);
+//   $("div.site_current_station #station_description").html(station.description);
 
-  $("img#station_image").attr('src', serverSite+'uploads/images/' + station.picture);
+//   $("img#station_image").attr('src', serverSite+'uploads/images/' + station.picture);
   
-  if(typeof station.sound !== 'undefined' && station.sound !== ''){
-    var site_sound =  '<audio id="site_sound" controls>' +
-                        '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/ogg">' +
-                        '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/mpeg">' +    
-                      '</audio>';
-    $("div#station_sound").html(site_sound);
-  }
+//   if(typeof station.sound !== 'undefined' && station.sound !== ''){
+//     var site_sound =  '<audio id="site_sound" controls>' +
+//                         '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/ogg">' +
+//                         '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/mpeg">' +    
+//                       '</audio>';
+//     $("div#station_sound").html(site_sound);
+//   }
 
-  $(".station_slider").each(function(){
-    $(this).removeClass('selected');
-  })
+//   $(".station_slider").each(function(){
+//     $(this).removeClass('selected');
+//   })
 
-  $('.station_slider#'+station_number).addClass('selected');
-}
+//   $('.station_slider#'+station_number).addClass('selected');
+// }
 
 function goToFaqs(){
   loadPage('faq.html');
@@ -103,53 +97,115 @@ function startScanning() {
                 
                  // insert site data
                 if(typeof site_data.name !== 'undefined' && site_data.name !== ''){
-                  $("h1#site_title").html(site_data.name);    
+                  $("h1#page_title").html(site_data.name);    
                 }
-                if(typeof site_data.description !== 'undefined' && site_data.description !== ''){
-                  $("div#site_description").html(site_data.description);
+
+                var site_sound =  '<audio id="site_sound" controls>' +
+                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
+                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +    
+                                  '</audio>';
+                
+                element = '<div>' +
+                            '<div class="col-md-4">' + 
+                              '<div>' + site_data.description + '</div>' + 
+                              '<div>' + site_sound + '</div>' + 
+                            '</div>' +
+                            '<div id="site_img_wrapper" class="col-md-8">' + 
+                              '<img id="site_image" src="' + serverSite+'uploads/images/' + site_data.picture + '" />' +
+                            '</div>' +
+                          '</div>';
+                $("div.site_data").append(element);
+                
+                var options = {
+                  rtl: true,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  arrows: false,
+                  fade: false,
+                  infinite: false
                 }
-                if(typeof site_data.picture !== 'undefined' && site_data.picture !== ''){
-                  $("img#site_image").attr('src', serverSite+'uploads/images/' + site_data.picture);
+
+                for(var i in stations){
+                  var station = stations[i];
+                  var tasks = station.tasks;
+                  for(var j in tasks){
+                    var task = tasks[j];
+                    var task_sound =  '<audio id="site_sound" controls>' +
+                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
+                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +    
+                                          '</audio>';
+                    element = '<div>' +
+                                '<div class="col-md-4">' + 
+                                  '<div>' + task.description + '</div>' + 
+                                  '<div>' + task_sound + '</div>' + 
+                                '</div>' +
+                                '<div id="site_img_wrapper" class="col-md-8">' + 
+                                  '<img id="site_image" src="' + serverSite+'uploads/images/' + task.picture + '" />' +
+                                '</div>' +
+                              '</div>';
+                    $("div.site_data").append(element);
+                  }
                 }
-                if(typeof site_data.sound !== 'undefined' && site_data.sound !== ''){
-                  var site_sound =  '<audio id="site_sound" controls>' +
-                                      '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
-                                      '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +    
-                                    '</audio>';
-                  $("div#site_sound").html(site_sound);
-                }
+
+                $("button#startScanning").addClass("hidden");
+                $("div.site_data").removeClass("hidden");
+                $("#loader_container").fadeOut("slow");
+                activeSlick("div.site_data", options);
+
+
+
+
+
+
+                // if(typeof site_data.description !== 'undefined' && site_data.description !== ''){
+                //   $("div#site_description").html(site_data.description);
+                // }
+                // if(typeof site_data.picture !== 'undefined' && site_data.picture !== ''){
+                //   $("img#site_image").attr('src', serverSite+'uploads/images/' + site_data.picture);
+                // }
+                // if(typeof site_data.sound !== 'undefined' && site_data.sound !== ''){
+                //   var site_sound =  '<audio id="site_sound" controls>' +
+                //                       '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
+                //                       '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +    
+                //                     '</audio>';
+                //   $("div#site_sound").html(site_sound);
+                // }
                 
                 // insert stations data
-                if(stations.length !== 0){   
-                  $("div.site_container div.site_stations_wrapper").empty();             
-                  for(var i in stations){
-                    var station = stations[i];
-                    var station_el = '<div id="'+ i +'" class="station_slider" ><img src="' + serverSite + 'uploads/images/' + station.picture + '" /></div>';
-                    $("div.site_container div.site_stations_wrapper").append(station_el);             
-                  }
-                  goToSpecificStationTasks(-1);
-                }
+                // if(stations.length !== 0){   
+                //   $("div.site_container div.site_stations_wrapper").empty();             
+                //   for(var i in stations){
+                //     var station = stations[i];
+                //     var station_el = '<div id="'+ i +'" class="station_slider" ><img src="' + serverSite + 'uploads/images/' + station.picture + '" /></div>';
+                //     $("div.site_container div.site_stations_wrapper").append(station_el);             
+                //   }
+                //   goToSpecificStationTasks(-1);
+                // }
+
+              localStorage.site_start = Math.floor(Date.now() / 1000);
+
+              // var selector = "div.site_container div.site_stations_wrapper";
+              // var options = {
+              //   rtl: true,
+              //   slidesToShow: 4,
+              //   slidesToScroll: 1,
+              //   arrows: false,
+              //   fade: false,
+              //   infinite: false
+              // }
+              // $("button#startScanning").addClass("hidden");
+              // $("div.site_data").removeClass("hidden");
+              // $("#loader_container").fadeOut("slow");
+              // activeSlick(selector, options)  
                 
+            }else{
+              $("#loader_container").fadeOut("slow");
+              return;
             }
-
-            localStorage.site_start = Math.floor(Date.now() / 1000);
-
-            var selector = "div.site_container div.site_stations_wrapper";
-            var options = {
-              rtl: true,
-              slidesToShow: 4,
-              slidesToScroll: 1,
-              arrows: false,
-              fade: false,
-              infinite: false
-            }
-            $("button#startScanning").addClass("hidden");
-            $("div.site_data, div.site_stations").removeClass("hidden");
-            $("#loader_container").fadeOut("slow");
-            activeSlick(selector, options)
           });           
       }, 
       function (error) {
+          $("#loader_container").fadeOut("slow");
           alert("Scanning failed: " + error);
       },
       {
