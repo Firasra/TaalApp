@@ -200,7 +200,7 @@ div.user_profile div.helpIcons{
 	height: 100%;
 }
 
-#danger, #help{
+#danger, #help, .previous_station{
 	float: left;
 }
 
@@ -208,7 +208,7 @@ div.user_profile div.helpIcons{
 	height: 95%;
 }
 
-#help{
+#help, .previous_station{
 	height: 100%;
 }
 
@@ -229,7 +229,6 @@ div.user_profile div.user_profile_info h2{
 
 div.site_data,
 div.site_current_station{
-	margin-top: 10%;
 }
 
 div.site_data div#site_img_wrapper img#site_image,
