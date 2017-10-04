@@ -282,6 +282,8 @@ audio#site_sound{
 img.audio_play{
 	width: 50px;
 	z-index: 9999;
+	background-color: #fff;
+	border-radius: 50px;
 }
 
 /***

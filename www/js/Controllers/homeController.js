@@ -18,6 +18,16 @@ $(document).ready(function(){
     setTitle();
   });
 
+  $(".site_data").on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    turnOffAudio();
+  });
+
+  $(".site_data").on('afterChange', function(event, slick, currentSlide){
+    $("div.site_data .slick-active audio")[0].loop = true;;
+    $("div.site_data .slick-active audio")[0].play();  
+    $("div.site_data .slick-active img.audio_play").attr('src', 'images/icons/mute.png');
+  });
+
   // when slider get to the end
   $('.site_data').on('edge', function(event, slick, direction){
     if( direction === 'left' ){
@@ -42,16 +52,24 @@ $(document).ready(function(){
   $('div.site_data').on('click', 'img.audio_play', function(event) {
     var audio_el = $(this).parent().find('audio');
     if(audio_el[0].paused == false) {
-        $(this).attr('src', 'images/icons/mute.png');
+        $(this).attr('src', 'images/icons/audio.png');
         audio_el[0].pause();
     }else {
-        $(this).attr('src', 'images/icons/audio.png');
+        $(this).attr('src', 'images/icons/mute.png');
         audio_el[0].play();
     }
     event.preventDefault();
   });
 
 });
+
+function turnOffAudio(){
+  $("audio").each(function(){
+    $(this).parent().find('img.audio_play').attr('src', 'images/icons/audio.png');
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+  })
+}
 
 function setTitle(){
   var title = $('.site_data .slick-active .object_data').data('name');
@@ -117,7 +135,7 @@ function startScanning() {
                                     '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
                                     '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +
                                   '</audio>';
-                site_sound += '<img class="audio_play" src="images/icons/audio.png" />';
+                site_sound += '<img class="audio_play" src="images/icons/mute.png" />';
 
                 element = '<div>' +
                             '<div class="col-md-4 object_data" data-name="' + site_data.name + '">' +
@@ -151,7 +169,7 @@ function startScanning() {
                                             '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
                                             '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +
                                           '</audio>';
-                    task_sound += '<img class="audio_play" src="images/icons/audio.png" />';
+                    task_sound += '<img class="audio_play" src="images/icons/mute.png" />';
                     element = '<div>' +
                                 '<div class="col-md-4 object_data" data-name="' + station.name + '">' +
                                   '<div>' + task.description + '</div>' +
@@ -170,7 +188,8 @@ function startScanning() {
                 $("img.previous_station").removeClass("hidden");
                 $("#loader_container").fadeOut("slow");
                 activeSlick("div.site_data", options);
-
+                $("div.site_data .slick-active audio")[0].loop = true;;
+                $("div.site_data .slick-active audio")[0].play();  
               localStorage.site_start = Math.floor(Date.now() / 1000);
 
             }else{
