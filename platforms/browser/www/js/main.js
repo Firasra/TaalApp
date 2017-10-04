@@ -169,6 +169,13 @@ $(document).ready(function(){
     
   });
 
+  $('img#danger, img#help').on('click', function(event) {
+    swal({
+      title: 'قريبا! في النسخة القادمة',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
   // $("#selfHelp, #localHelp, #remoteHelp").click(function(){
   //   swal({
   //     title: 'قريبا! في النسخة القادمة',

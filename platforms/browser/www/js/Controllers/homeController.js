@@ -41,14 +41,6 @@ $(document).ready(function(){
     setTitle();
   });
 
-  $('img#danger').on('click', function(event) {
-    swal({
-      title: 'قريبا! في النسخة القادمة',
-      timer: 2000,
-      showConfirmButton: false
-    });
-  });
-
   $('div.site_data').on('click', 'img.audio_play', function(event) {
     var audio_el = $(this).parent().find('audio');
     if(audio_el[0].paused == false) {
