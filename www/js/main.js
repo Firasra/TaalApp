@@ -174,11 +174,11 @@ $(document).ready(function(){
     
   });
 
-  $("#selfHelp, #localHelp, #remoteHelp").click(function(){
-    swal({
-      title: 'قريبا! في النسخة القادمة',
-      timer: 2000,
-      showConfirmButton: false
-    });
-  });
+  // $("#selfHelp, #localHelp, #remoteHelp").click(function(){
+  //   swal({
+  //     title: 'قريبا! في النسخة القادمة',
+  //     timer: 2000,
+  //     showConfirmButton: false
+  //   });
+  // });
 })

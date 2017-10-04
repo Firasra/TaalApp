@@ -7,28 +7,81 @@ $(document).ready(function(){
   changeLanguage();
   startScanning();
   //$('button#startScanning').click();
-
   localStorage.removeItem('site_start');
-
   goToStart();
 
-  $("div").on('click', ".station_slider.slick-active", function(){
-    goToSpecificStationTasks( $(this).attr('id') );
-  })
+  // prevent swiping left
+  $('.site_data').on('swipe', function(event, slick, direction){
+    if( direction === 'right' ){
+      $('.site_data').slick('slickNext');
+    }
+    setTitle();
+  });
 
-  $("div").on('click', 'img.next_station', function(){
-    var next_station = parseInt($(".station_slider.selected").attr('id'));
-    goToSpecificStationTasks(next_station+1);
-  })
+  $(".site_data").on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    turnOffAudio();
+  });
+
+  $(".site_data").on('afterChange', function(event, slick, currentSlide){
+    $("div.site_data .slick-active audio")[0].loop = true;;
+    $("div.site_data .slick-active audio")[0].play();  
+    $("div.site_data .slick-active img.audio_play").attr('src', 'images/icons/mute.png');
+  });
+
+  // when slider get to the end
+  $('.site_data').on('edge', function(event, slick, direction){
+    if( direction === 'left' ){
+      goToFaqs();
+    }
+  });
+
+  // go to previous slide
+  $('.previous_station').on('click', function(event){
+    $('.site_data').slick('slickPrev');
+    setTitle();
+  });
+
+  $('img#danger').on('click', function(event) {
+    swal({
+      title: 'قريبا! في النسخة القادمة',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+
+  $('div.site_data').on('click', 'img.audio_play', function(event) {
+    var audio_el = $(this).parent().find('audio');
+    if(audio_el[0].paused == false) {
+        $(this).attr('src', 'images/icons/audio.png');
+        audio_el[0].pause();
+    }else {
+        $(this).attr('src', 'images/icons/mute.png');
+        audio_el[0].play();
+    }
+    event.preventDefault();
+  });
 
 });
+
+function turnOffAudio(){
+  $("audio").each(function(){
+    $(this).parent().find('img.audio_play').attr('src', 'images/icons/audio.png');
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+  })
+}
+
+function setTitle(){
+  var title = $('.site_data .slick-active .object_data').data('name');
+  $("h1#page_title").html(title);
+}
 
 function activeSlick(selector, options){
   $(selector).slick(options);
 }
 
 function loggedin(){
-    
+
 }
 
 function notLoggedin(){
@@ -42,41 +95,13 @@ function goToStart(){
   $("#loader_container").fadeOut("slow");
 }
 
-function goToSpecificStationTasks(station_number){
-  if( station_number == -1 || $(".station_slider.selected").attr('id') == station_number || site_data.stations.length <= station_number )
-    return;
-  
-  $("div.site_data").addClass('hidden');
-  $("div.site_current_station").removeClass('hidden');
-  var station = site_data.stations[station_number];
-
-  $("div.site_current_station #station_title").html(station.name);
-  $("div.site_current_station #station_description").html(station.description);
-
-  $("img#station_image").attr('src', serverSite+'uploads/images/' + station.picture);
-  
-  if(typeof station.sound !== 'undefined' && station.sound !== ''){
-    var site_sound =  '<audio id="site_sound" controls>' +
-                        '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/ogg">' +
-                        '<source src="' + serverSite + 'uploads/sounds/' + station.sound + '" type="audio/mpeg">' +    
-                      '</audio>';
-    $("div#station_sound").html(site_sound);
-  }
-
-  $(".station_slider").each(function(){
-    $(this).removeClass('selected');
-  })
-
-  $('.station_slider#'+station_number).addClass('selected');
-}
-
 function goToFaqs(){
   loadPage('faq.html');
 }
 
-function startScanning() {     
+function startScanning() {
     $('button#startScanning').click( function() {
-    
+
       $("#loader_container").show();
       cordova.plugins.barcodeScanner.scan(
       function (result) {
@@ -87,11 +112,11 @@ function startScanning() {
           var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
           var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
           $.ajax({
-            type: "GET", 
-            crossDomain: true, 
+            type: "GET",
+            crossDomain: true,
             url: serverSite+"api/site",
-            dataType: 'json', 
-            cache: false, 
+            dataType: 'json',
+            cache: false,
             headers: {"username":username, "token":token},
             data: {"site": parseInt(result.text)}
           }).done(function(response) {
@@ -100,56 +125,81 @@ function startScanning() {
                 site_data = response.data.site;
                 localStorage.site_id = site_data.id;
                 var stations = site_data.stations;
-                
+
                  // insert site data
                 if(typeof site_data.name !== 'undefined' && site_data.name !== ''){
-                  $("h1#site_title").html(site_data.name);    
+                  $("h1#page_title").html(site_data.name);
                 }
-                if(typeof site_data.description !== 'undefined' && site_data.description !== ''){
-                  $("div#site_description").html(site_data.description);
+
+                var site_sound =  '<audio id="site_sound" controls>' +
+                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
+                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +
+                                  '</audio>';
+                site_sound += '<img class="audio_play" src="images/icons/mute.png" />';
+
+                element = '<div>' +
+                            '<div class="col-md-4 object_data" data-name="' + site_data.name + '">' +
+                              '<div>' + site_data.description + '</div>' +
+                              '<div>' + site_sound + '</div>' +
+                            '</div>' +
+                            '<div id="site_img_wrapper" class="col-md-8">' +
+                              '<img id="site_image" src="' + serverSite+'uploads/images/' + site_data.picture + '" />' +
+                            '</div>' +
+                          '</div>';
+                $("div.site_data").append(element);
+
+                var options = {
+                  rtl: true,
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  arrows: false,
+                  fade: false,
+                  initialSlide: 0,
+                  waitForAnimate: false,
+                  edgeFriction: 0,
+                  infinite: false
                 }
-                if(typeof site_data.picture !== 'undefined' && site_data.picture !== ''){
-                  $("img#site_image").attr('src', serverSite+'uploads/images/' + site_data.picture);
-                }
-                if(typeof site_data.sound !== 'undefined' && site_data.sound !== ''){
-                  var site_sound =  '<audio id="site_sound" controls>' +
-                                      '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
-                                      '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +    
-                                    '</audio>';
-                  $("div#site_sound").html(site_sound);
-                }
-                
-                // insert stations data
-                if(stations.length !== 0){   
-                  $("div.site_container div.site_stations_wrapper").empty();             
-                  for(var i in stations){
-                    var station = stations[i];
-                    var station_el = '<div id="'+ i +'" class="station_slider" ><img src="' + serverSite + 'uploads/images/' + station.picture + '" /></div>';
-                    $("div.site_container div.site_stations_wrapper").append(station_el);             
+
+                for(var i in stations){
+                  var station = stations[i];
+                  var tasks = station.tasks;
+                  for(var j in tasks){
+                    var task = tasks[j];
+                    var task_sound =  '<audio id="site_sound" controls>' +
+                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
+                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +
+                                          '</audio>';
+                    task_sound += '<img class="audio_play" src="images/icons/mute.png" />';
+                    element = '<div>' +
+                                '<div class="col-md-4 object_data" data-name="' + station.name + '">' +
+                                  '<div>' + task.description + '</div>' +
+                                  '<div>' + task_sound + '</div>' +
+                                '</div>' +
+                                '<div id="site_img_wrapper" class="col-md-8">' +
+                                  '<img id="site_image" src="' + serverSite+'uploads/images/' + task.picture + '" />' +
+                                '</div>' +
+                              '</div>';
+                    $("div.site_data").append(element);
                   }
-                  goToSpecificStationTasks(-1);
                 }
-                
-            }
 
-            localStorage.site_start = Math.floor(Date.now() / 1000);
+                $("button#startScanning").addClass("hidden");
+                $("div.site_data").removeClass("hidden");
+                $("img.previous_station").removeClass("hidden");
+                $("#loader_container").fadeOut("slow");
+                activeSlick("div.site_data", options);
+                $("div.site_data .slick-active audio")[0].loop = true;;
+                $("div.site_data .slick-active audio")[0].play();  
+              localStorage.site_start = Math.floor(Date.now() / 1000);
 
-            var selector = "div.site_container div.site_stations_wrapper";
-            var options = {
-              rtl: true,
-              slidesToShow: 4,
-              slidesToScroll: 1,
-              arrows: false,
-              fade: false,
-              infinite: false
+            }else{
+              $("#loader_container").fadeOut("slow");
+              return;
             }
-            $("button#startScanning").addClass("hidden");
-            $("div.site_data, div.site_stations").removeClass("hidden");
-            $("#loader_container").fadeOut("slow");
-            activeSlick(selector, options)
-          });           
-      }, 
+          });
+      },
       function (error) {
+          $("#loader_container").fadeOut("slow");
           alert("Scanning failed: " + error);
       },
       {
