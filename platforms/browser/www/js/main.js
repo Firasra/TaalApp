@@ -124,11 +124,6 @@ function toggle_sidebar(){
 }
 
 $(document).ready(function(){
-  var sidebar    = document.getElementById("sidebar");
-  var toggle_img = document.getElementById("toggle_img");
-  sidebar.style.left = "-200px";
-  toggle_img.style.left = "0px";
-
   $("#logoutButton").click(function(){
     swal({
       title: "تحذير",

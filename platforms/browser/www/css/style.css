@@ -304,3 +304,19 @@ Start of Slick CSS
 /***
 End of Slick CSS
 ***/
+
+/***
+End of SWAL CSS
+***/
+div.sweet-alert{
+	color: #333;
+}
+
+div.sweet-alert .sa-input-error{
+	right: unset;
+	top: 23px;
+    left: 5px;
+}
+/***
+End of SWAL CSS
+***/
