@@ -31,11 +31,31 @@ $(document).ready(function(){
     setTitle();
   });
 
+  $('img#danger').on('click', function(event) {
+    swal({
+      title: 'قريبا! في النسخة القادمة',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  });
+
+  $('div.site_data').on('click', 'img.audio_play', function(event) {
+    var audio_el = $(this).parent().find('audio');
+    if(audio_el[0].paused == false) {
+        $(this).attr('src', 'images/icons/mute.png');
+        audio_el[0].pause();
+    }else {
+        $(this).attr('src', 'images/icons/audio.png');
+        audio_el[0].play();
+    }
+    event.preventDefault();
+  });
+
 });
 
 function setTitle(){
   var title = $('.site_data .slick-active .object_data').data('name');
-  $("h1#page_title").html(title);    
+  $("h1#page_title").html(title);
 }
 
 function activeSlick(selector, options){
@@ -43,7 +63,7 @@ function activeSlick(selector, options){
 }
 
 function loggedin(){
-    
+
 }
 
 function notLoggedin(){
@@ -61,9 +81,9 @@ function goToFaqs(){
   loadPage('faq.html');
 }
 
-function startScanning() {     
+function startScanning() {
     $('button#startScanning').click( function() {
-    
+
       $("#loader_container").show();
       cordova.plugins.barcodeScanner.scan(
       function (result) {
@@ -74,11 +94,11 @@ function startScanning() {
           var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
           var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
           $.ajax({
-            type: "GET", 
-            crossDomain: true, 
+            type: "GET",
+            crossDomain: true,
             url: serverSite+"api/site",
-            dataType: 'json', 
-            cache: false, 
+            dataType: 'json',
+            cache: false,
             headers: {"username":username, "token":token},
             data: {"site": parseInt(result.text)}
           }).done(function(response) {
@@ -87,28 +107,29 @@ function startScanning() {
                 site_data = response.data.site;
                 localStorage.site_id = site_data.id;
                 var stations = site_data.stations;
-                
+
                  // insert site data
                 if(typeof site_data.name !== 'undefined' && site_data.name !== ''){
-                  $("h1#page_title").html(site_data.name);    
+                  $("h1#page_title").html(site_data.name);
                 }
 
                 var site_sound =  '<audio id="site_sound" controls>' +
                                     '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
-                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +    
+                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +
                                   '</audio>';
-                
+                site_sound += '<img class="audio_play" src="images/icons/audio.png" />';
+
                 element = '<div>' +
-                            '<div class="col-md-4 object_data" data-name="' + site_data.name + '">' + 
-                              '<div>' + site_data.description + '</div>' + 
-                              '<div>' + site_sound + '</div>' + 
+                            '<div class="col-md-4 object_data" data-name="' + site_data.name + '">' +
+                              '<div>' + site_data.description + '</div>' +
+                              '<div>' + site_sound + '</div>' +
                             '</div>' +
-                            '<div id="site_img_wrapper" class="col-md-8">' + 
+                            '<div id="site_img_wrapper" class="col-md-8">' +
                               '<img id="site_image" src="' + serverSite+'uploads/images/' + site_data.picture + '" />' +
                             '</div>' +
                           '</div>';
                 $("div.site_data").append(element);
-                
+
                 var options = {
                   rtl: true,
                   slidesToShow: 1,
@@ -128,14 +149,15 @@ function startScanning() {
                     var task = tasks[j];
                     var task_sound =  '<audio id="site_sound" controls>' +
                                             '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
-                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +    
+                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +
                                           '</audio>';
+                    task_sound += '<img class="audio_play" src="images/icons/audio.png" />';
                     element = '<div>' +
-                                '<div class="col-md-4 object_data" data-name="' + station.name + '">' + 
-                                  '<div>' + task.description + '</div>' + 
-                                  '<div>' + task_sound + '</div>' + 
+                                '<div class="col-md-4 object_data" data-name="' + station.name + '">' +
+                                  '<div>' + task.description + '</div>' +
+                                  '<div>' + task_sound + '</div>' +
                                 '</div>' +
-                                '<div id="site_img_wrapper" class="col-md-8">' + 
+                                '<div id="site_img_wrapper" class="col-md-8">' +
                                   '<img id="site_image" src="' + serverSite+'uploads/images/' + task.picture + '" />' +
                                 '</div>' +
                               '</div>';
@@ -155,8 +177,8 @@ function startScanning() {
               $("#loader_container").fadeOut("slow");
               return;
             }
-          });           
-      }, 
+          });
+      },
       function (error) {
           $("#loader_container").fadeOut("slow");
           alert("Scanning failed: " + error);

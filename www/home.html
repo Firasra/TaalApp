@@ -33,7 +33,7 @@
 
         <div class="site_container">
             <div class="user_profile">           
-                <div class="user_profile_info col-md-4">
+                <div class="user_profile_info col-md-4" data-toggle="collapse" data-target="#user_profile_description">
                     <img class="user_profile_image" src="images/profile.png" />
                     <h2>خليل كوكو</h2>
                 </div>
@@ -41,9 +41,13 @@
                     <h1 id="page_title"></h1>
                 </div>
                 <div class="helpIcons col-md-4">
-                    <img id="help" src="images/icons/help.png" />
                     <img id="danger" src="images/icons/danger.png" />
+                    <img id="help" src="images/icons/help.png" />
                     <img class="previous_station hidden" src="images/icons/previous_station.png" />
+                </div>
+                <div id="user_profile_description" class="collapse col-md-12">
+                    <div class="user_profile_description_text">شسي شسيتشسيا تنشساي تشسيتن اشستنياشتني اشستنياشستنيا</div>
+                    <img src="images/icons/x-icon.png" id="user_profile_description_close" data-toggle="collapse" data-target="#user_profile_description">
                 </div>
             </div>
             
