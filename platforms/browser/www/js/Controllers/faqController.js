@@ -1,14 +1,7 @@
 $(document).ready(function(){
   isLoggedin();
   changeLanguage();
-  var site_start = localStorage.site_start;
-  var current_time = Math.floor(Date.now() / 1000);
-  var time_diff = current_time - site_start;
-  var minutes = Math.round(Number(time_diff/60));
-  var seconds = time_diff - (minutes*60);
-  $("#site_time_minutes").html(minutes);
-  $("#site_time_seconds").html(seconds);
-  $("#faq_wrapper").hide();
+  getFaq();
   
 });
 

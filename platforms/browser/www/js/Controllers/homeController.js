@@ -88,12 +88,30 @@ function goToStart(){
 }
 
 function goToFaqs(){
-  loadPage('faq.html');
+  turnOffAudio();
+  var site_start = localStorage.site_start;
+  var current_time = Math.floor(Date.now() / 1000);
+  var time_diff = current_time - site_start;
+  var minutes = Math.round(Number(time_diff/60));
+  var seconds = time_diff - (minutes*60);
+  var text = translation[choosedLanguage]['SITE_TIME'] + ' ' + minutes + ' ' + 
+             translation[choosedLanguage]['MINUTES'] + ' ' + translation[choosedLanguage]['AND'] + ' ' +
+             seconds + ' ' + translation[choosedLanguage]['SECONDS'];
+
+  swal({
+    title: translation[choosedLanguage]['GOOD_WORK'],
+    text: text,
+    icon: "success",
+    button: translation[choosedLanguage]['GO_TO_FAQS'],
+    closeOnClickOutside: false
+  }).then(() => {
+    loadPage('faq.html');
+  });
 }
 
 function startScanning() {
     $('button#startScanning').click( function() {
-
+      $("div#user_profile_description.collapse").removeClass('in');
       $("#loader_container").show();
       cordova.plugins.barcodeScanner.scan(
       function (result) {
@@ -113,7 +131,7 @@ function startScanning() {
             data: {"site": parseInt(result.text)}
           }).done(function(response) {
             if(typeof response.success !== 'undefined' && response.success &&
-               typeof response.data !== 'undefined'){
+               typeof response.data !== 'undefined'){     
                 site_data = response.data.site;
                 localStorage.site_id = site_data.id;
                 var stations = site_data.stations;
@@ -178,11 +196,12 @@ function startScanning() {
                 $("button#startScanning").addClass("hidden");
                 $("div.site_data").removeClass("hidden");
                 $("img.previous_station").removeClass("hidden");
+                $("img#home_icon").removeClass("hidden");
                 $("#loader_container").fadeOut("slow");
                 activeSlick("div.site_data", options);
                 $("div.site_data .slick-active audio")[0].loop = true;;
                 $("div.site_data .slick-active audio")[0].play();  
-              localStorage.site_start = Math.floor(Date.now() / 1000);
+                localStorage.site_start = Math.floor(Date.now() / 1000);
 
             }else{
               $("#loader_container").fadeOut("slow");
