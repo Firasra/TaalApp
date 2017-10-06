@@ -1,3 +1,5 @@
+var site_data = {};
+var user_data = {};
 function getFormParams(form){
   var data = form.serializeArray().reduce(function(obj, item) {
                   obj[item.name] = item.value;
@@ -49,7 +51,8 @@ function logoutAction(){
       url: serverSite+"api/logout", 
       dataType: 'json', 
       cache: false, 
-      headers:{ "username" : username, "token": token } 
+      headers:{ "token": token },
+      data: { "username": username }
     }).done(function(response) {
       if (typeof response.success !== 'undefined' && response.success ) {
         logout();   
@@ -59,20 +62,29 @@ function logoutAction(){
 }
 
 function isLoggedin(){
+  
   $("#loader_container").show();
   var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
   var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
+  
   $.ajax({
     type: "POST", 
     crossDomain: true, 
     url: serverSite+"api/isLoggedin", 
     dataType: 'json', 
     cache: false, 
-    headers:{ "username" : username, "token": token } 
+    headers: { "token": token },
+    data: { "username": username }
   }).done(function(response) {
     if (! (typeof response.success !== 'undefined' && response.success) ) {
       notLoggedin();
     }else{
+      user_data = response.data;
+      $("div.user_profile_info h2").html(user_data.name);
+      $("div.user_profile_description_text").html(user_data.biography);
+      if( user_data.picture !== '' ){
+        $("img.user_profile_image").attr('src', serverSite + 'uploads/images/' + user_data.picture);
+      }
       loggedin();
     }
   }); 

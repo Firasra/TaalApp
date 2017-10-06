@@ -28,6 +28,8 @@ function faqAction(form){
   var token    = typeof localStorage.auth_token !== 'undefined' ? localStorage.auth_token : '';
   var username = typeof localStorage.username !== 'undefined' ? localStorage.username : '';
 
+  form_data['username'] = username;
+
   $.ajax({
     type: "POST", 
     crossDomain: true, 
@@ -54,8 +56,8 @@ function getFaq(){
     url: serverSite+"api/site_faq",
     dataType: 'json', 
     cache: false, 
-    headers: {"username":username, "token":token},
-    data: {"site": parseInt(site_id)}
+    headers: {"token":token},
+    data: {"username":username, "site": parseInt(site_id)}
   }).done(function(response) {
     if(typeof response.success !== 'undefined' && response.success &&
         typeof response.data !== 'undefined'){
