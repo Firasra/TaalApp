@@ -1,6 +1,4 @@
 $("#loader_container").show();
-var site_data = {};
-
 $(document).ready(function(){
 
   isLoggedin();
@@ -147,13 +145,20 @@ function startScanning() {
                                   '</audio>';
                 site_sound += '<img class="audio_play" src="images/icons/mute.png" />';
 
+                var site_picture = '';
+                if( site_data.picture !== '' ){
+                  site_picture = serverSite + 'uploads/images/' + site_data.picture;
+                }else{
+                  site_picture = 'images/icons/unnamed.png';
+                }
+                var site_picture = site_data.picture !== '' ? site_data.picture : 'images/icons/unnamed.png';
                 element = '<div>' +
                             '<div class="col-md-4 object_data" data-name="' + site_data.name + '">' +
                               '<div>' + site_data.description + '</div>' +
                               '<div>' + site_sound + '</div>' +
                             '</div>' +
                             '<div id="site_img_wrapper" class="col-md-8">' +
-                              '<img id="site_image" src="' + serverSite+'uploads/images/' + site_data.picture + '" />' +
+                              '<img id="site_image" src="' + site_picture + '" />' +
                             '</div>' +
                           '</div>';
                 $("div.site_data").append(element);
