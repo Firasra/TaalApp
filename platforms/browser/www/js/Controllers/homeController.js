@@ -125,8 +125,8 @@ function startScanning() {
             url: serverSite+"api/site",
             dataType: 'json',
             cache: false,
-            headers: {"username":username, "token":token},
-            data: {"site": parseInt(result.text)}
+            headers: {"token":token},
+            data: {"username": username, "site": parseInt(result.text)}
           }).done(function(response) {
             if(typeof response.success !== 'undefined' && response.success &&
                typeof response.data !== 'undefined'){     
@@ -185,13 +185,21 @@ function startScanning() {
                                             '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +
                                           '</audio>';
                     task_sound += '<img class="audio_play" src="images/icons/mute.png" />';
+
+                    var task_picture = '';
+                    if( task.picture !== '' ){
+                      task_picture = serverSite + 'uploads/images/' + task.picture;
+                    }else{
+                      task_picture = 'images/icons/unnamed.png';
+                    }
+                    var task_picture = task.picture !== '' ? task.picture : 'images/icons/unnamed.png';
                     element = '<div>' +
                                 '<div class="col-md-4 object_data" data-name="' + station.name + '">' +
                                   '<div>' + task.description + '</div>' +
                                   '<div>' + task_sound + '</div>' +
                                 '</div>' +
                                 '<div id="site_img_wrapper" class="col-md-8">' +
-                                  '<img id="site_image" src="' + serverSite+'uploads/images/' + task.picture + '" />' +
+                                  '<img id="site_image" src="' + task_picture + '" />' +
                                 '</div>' +
                               '</div>';
                     $("div.site_data").append(element);

@@ -51,7 +51,8 @@ function logoutAction(){
       url: serverSite+"api/logout", 
       dataType: 'json', 
       cache: false, 
-      headers:{ "username" : username, "token": token } 
+      headers:{ "token": token },
+      data: { "username": username }
     }).done(function(response) {
       if (typeof response.success !== 'undefined' && response.success ) {
         logout();   
@@ -72,7 +73,8 @@ function isLoggedin(){
     url: serverSite+"api/isLoggedin", 
     dataType: 'json', 
     cache: false, 
-    headers:{ "username" : username, "token": token } 
+    headers: { "token": token },
+    data: { "username": username }
   }).done(function(response) {
     if (! (typeof response.success !== 'undefined' && response.success) ) {
       notLoggedin();
