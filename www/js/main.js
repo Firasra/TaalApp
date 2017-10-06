@@ -25,7 +25,8 @@ function loginAction(form){
             typeof response.data.token !== 'undefined' && typeof response.data.username !== 'undefined' ) {
           var data = response.data;
           localStorage.auth_token = response.data.token;
-          localStorage.username = response.data.username;
+          var username = $.trim(response.data.username);
+          localStorage.username = username.toLowerCase();
           loadPage('home.html');
         }else{
           $("#loader_container").hide();
@@ -135,7 +136,6 @@ $(document).ready(function(){
     .then((inputValue) => {
       if (inputValue) {
         if (inputValue === false || inputValue === "") {
-          alert('qwe');
           swal({
             text: "اسم المستخدم غير متطابق",
             button: "حسنا"
@@ -144,6 +144,8 @@ $(document).ready(function(){
           return false
         }
         var loggedin_username = localStorage.username;
+        inputValue = $.trim(inputValue);
+        inputValue = inputValue.toLowerCase();
         if(loggedin_username == inputValue){
           logoutAction();
         }else{
