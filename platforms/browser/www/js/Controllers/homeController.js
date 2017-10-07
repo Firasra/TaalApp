@@ -140,14 +140,14 @@ function startScanning() {
                 }
 
                 var site_sound =  '<audio id="site_sound" controls>' +
-                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/ogg">' +
-                                    '<source src="' + serverSite + 'uploads/sounds/' + site_data.sound + '" type="audio/mpeg">' +
+                                    '<source src="' + site_data.sound + '" type="audio/ogg">' +
+                                    '<source src="' + site_data.sound + '" type="audio/mpeg">' +
                                   '</audio>';
                 site_sound += '<img class="audio_play" src="images/icons/mute.png" />';
 
                 var site_picture = '';
                 if( site_data.picture !== '' ){
-                  site_picture = serverSite + 'uploads/images/' + site_data.picture;
+                  site_picture = site_data.picture;
                 }else{
                   site_picture = 'images/icons/unnamed.png';
                 }
@@ -181,14 +181,14 @@ function startScanning() {
                   for(var j in tasks){
                     var task = tasks[j];
                     var task_sound =  '<audio id="site_sound" controls>' +
-                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/ogg">' +
-                                            '<source src="' + serverSite + 'uploads/sounds/' + task.sound + '" type="audio/mpeg">' +
+                                            '<source src="' + task.sound + '" type="audio/ogg">' +
+                                            '<source src="' + task.sound + '" type="audio/mpeg">' +
                                           '</audio>';
                     task_sound += '<img class="audio_play" src="images/icons/mute.png" />';
 
                     var task_picture = '';
                     if( task.picture !== '' ){
-                      task_picture = serverSite + 'uploads/images/' + task.picture;
+                      task_picture = task.picture;
                     }else{
                       task_picture = 'images/icons/unnamed.png';
                     }
