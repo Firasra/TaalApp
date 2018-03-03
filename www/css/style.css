@@ -302,8 +302,9 @@ Start of Slick CSS
 }
 
 .slick-slide{
-	padding: 2%;
-	float: right;
+	padding: 25px;
+    float: right;
+    margin-top: 75px;
 }
 /***
 End of Slick CSS

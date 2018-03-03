@@ -1,3 +1,3 @@
 var choosedLanguage = "ar";
-var serverSite 		= "http://192.241.225.137/";
+var serverSite 		= "http://http://18.195.13.68/";
 // var serverSite 		= "http://www.taal-manager.com/";

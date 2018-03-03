@@ -84,7 +84,7 @@ function isLoggedin(){
       $("div.user_profile_info h2").html(user_data.name);
       $("div.user_profile_description_text").html(user_data.biography);
       if( user_data.picture !== '' ){
-        $("img.user_profile_image").attr('src', serverSite + 'uploads/images/' + user_data.picture);
+        $("img.user_profile_image").attr('src', user_data.picture);
       }
       loggedin();
     }
