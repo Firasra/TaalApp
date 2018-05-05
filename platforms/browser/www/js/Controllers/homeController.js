@@ -41,7 +41,9 @@ $(document).ready(function(){
 
   $('div.site_data').on('click', 'img.audio_play', function(event) {
     var audio_el = $(this).parent().find('audio');
-    if(audio_el[0].paused == false) {
+    var is_paused = audio_el[0].paused == false;
+    turnOffAudio();
+    if(is_paused) {
         $(this).attr('src', 'images/icons/audio.png');
         audio_el[0].pause();
     }else {
@@ -50,6 +52,16 @@ $(document).ready(function(){
     }
     event.preventDefault();
   });
+
+  $("#home_icon").click(function(){
+      var is_paused = $("#station_sound")[0].paused == false;
+      turnOffAudio();
+      if(is_paused) {
+          $("#station_sound")[0].pause();
+      }else {
+          $("#station_sound")[0].play();
+      }
+  })
 
 });
 
@@ -62,8 +74,13 @@ function turnOffAudio(){
 }
 
 function setTitle(){
-  var title = $('.site_data .slick-active .object_data').data('name');
-  $("h1#page_title").html(title);
+  var station_id = $('.site_data .slick-active .object_data').data('name');
+  for(var i in site_data.stations){
+      if( site_data.stations[i].id === station_id ){
+          $("#station_sound").attr('src', site_data.stations[i].sound);
+          $("h1#page_title").html(site_data.stations[i].name);
+      }
+  }
 }
 
 function activeSlick(selector, options){
@@ -102,7 +119,7 @@ function goToFaqs(){
     icon: "success",
     button: translation[choosedLanguage]['GO_TO_FAQS'],
     closeOnClickOutside: false
-  }).then(() => {
+  }).then( function() {
     loadPage('faq.html');
   });
 }
@@ -137,6 +154,7 @@ function startScanning() {
                  // insert site data
                 if(typeof site_data.name !== 'undefined' && site_data.name !== ''){
                   $("h1#page_title").html(site_data.name);
+                    $("#station_sound").attr('src', site_data.sound);
                 }
 
                 var site_sound =  '<audio id="site_sound" controls>' +
@@ -173,10 +191,35 @@ function startScanning() {
                   waitForAnimate: false,
                   edgeFriction: 0,
                   infinite: false
-                }
+                };
 
                 for(var i in stations){
                   var station = stations[i];
+                  var station_sound =  '<audio id="site_sound" controls>' +
+                    '<source src="' + station.sound + '" type="audio/ogg">' +
+                    '<source src="' + station.sound + '" type="audio/mpeg">' +
+                    '</audio>';
+                  station_sound += '<img class="audio_play" src="images/icons/mute.png" />';
+
+                  var station_picture = '';
+                  if( station_picture.picture !== '' ){
+                    station_picture = station.picture;
+                  }else{
+                    station_picture = 'images/icons/unnamed.png';
+                  }
+                  station_picture = station.picture !== '' ? station.picture : 'images/icons/unnamed.png';
+                  var station_desc = !station.description || station.description == '' ? station.name : station.description;
+                  var stationElement = '<div>' +
+                    '<div class="col-md-4 object_data" data-name="' + station.id + '">' +
+                    '<div>' + station_desc + '</div>' +
+                    '<div>' + station_sound + '</div>' +
+                    '</div>' +
+                    '<div id="site_img_wrapper" class="col-md-8">' +
+                    '<img id="site_image" src="' + station_picture + '" />' +
+                    '</div>' +
+                    '</div>';
+                  $("div.site_data").append(stationElement);
+
                   var tasks = station.tasks;
                   for(var j in tasks){
                     var task = tasks[j];
@@ -192,9 +235,9 @@ function startScanning() {
                     }else{
                       task_picture = 'images/icons/unnamed.png';
                     }
-                    var task_picture = task.picture !== '' ? task.picture : 'images/icons/unnamed.png';
+                    task_picture = task.picture !== '' ? task.picture : 'images/icons/unnamed.png';
                     element = '<div>' +
-                                '<div class="col-md-4 object_data" data-name="' + station.name + '">' +
+                                '<div class="col-md-4 object_data" data-name="' + station.id + '">' +
                                   '<div>' + task.description + '</div>' +
                                   '<div>' + task_sound + '</div>' +
                                 '</div>' +
